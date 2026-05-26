@@ -1,13 +1,17 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Fleet Management System - Projects</title>
+    <title>Fleet Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine -->
     <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -15,7 +19,7 @@
 
 <div class="flex">
 
-    <!-- ================= SIDEBAR (your new system) ================= -->
+    <!-- ================= SIDEBAR ================= -->
     <aside class="w-64 h-screen bg-gray-100 border-r border-gray-200 fixed">
 
         <!-- LOGO -->
@@ -35,7 +39,7 @@
 
             <!-- Project -->
             <a href="project.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="folder" class="w-5 h-5"></i>
                 Project
             </a>
@@ -64,7 +68,7 @@
                 <div x-show="open" x-transition class="pl-8 space-y-1">
 
                     <a href="driver.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                    class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
 
                         <i data-lucide="user" class="w-4 h-4"></i>
                         Driver
@@ -90,7 +94,6 @@
 
         </nav>
     </aside>
-
 
     <!-- ================= MAIN ================= -->
     <div class="flex-1 ml-64">
@@ -151,20 +154,19 @@
         </header>
 
         <!-- CONTENT -->
-        <main class="pt-20 p-6">
+        <main class="pt-20 p-6" x-data="{ open: false }">
 
             <!-- TITLE -->
             <div class="flex justify-between items-center mb-4">
 
                 <div>
-                    <h2 class="text-xl font-semibold">Project List</h2>
-                    <p class="text-sm text-gray-500">
-                        Each project contains sites, tickets, drivers & lorries
-                    </p>
+                    <h2 class="text-xl font-semibold">Drivers</h2>
+                    <p class="text-sm text-gray-500">Manage driver licenses & certifications</p>
                 </div>
 
-                <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                    + Add Project
+                <button @click="open = true"
+                        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                    + Add Driver
                 </button>
 
             </div>
@@ -172,9 +174,10 @@
             <!-- TABLE -->
             <div class="bg-white rounded-xl shadow">
 
+                <!-- SEARCH -->
                 <div class="p-4 border-b flex justify-end">
                     <input type="text"
-                           placeholder="Search project..."
+                           placeholder="Search driver..."
                            class="border rounded-lg px-3 py-2 w-64">
                 </div>
 
@@ -182,9 +185,11 @@
 
                     <thead class="bg-gray-50 text-left">
                         <tr>
-                            <th class="p-3">Project Name</th>
-                            <th>Site</th>
-                            <th>Total Tickets</th>
+                            <th class="p-3">Name</th>
+                            <th>Employee ID</th>
+                            <th>License</th>
+                            <th>Expiry</th>
+                            <th>Assigned Equipment</th>
                             <th class="text-right p-3">Action</th>
                         </tr>
                     </thead>
@@ -193,60 +198,127 @@
 
                         <tr class="border-t hover:bg-gray-50">
 
-                            <td class="p-3 font-medium">Project Alpha</td>
+                            <td class="p-3 font-medium">John Tan</td>
 
-                            <td>HQ Kuala Lumpur</td>
+                            <td>EMP-1001</td>
+
+                            <td>DL-AX83921</td>
 
                             <td>
-                                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
-                                    3 Tickets
+                                <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                    2026-08-12
                                 </span>
                             </td>
 
-                            <td class="text-right p-3">
+                            <td>
+                                Truck WXY 1234
+                            </td>
 
-                                <a href="project-view.html"
-                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg
-                                          bg-gray-100 hover:bg-white hover:shadow">
+                            <td class="text-right p-3">
+                                <a href="driver-view.html"
+                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
 
                                     <i data-lucide="eye" class="w-4 h-4"></i>
 
                                 </a>
-
                             </td>
 
                         </tr>
 
                         <tr class="border-t hover:bg-gray-50">
 
-                            <td class="p-3 font-medium">Project Beta</td>
-
-                            <td>Shah Alam Depot</td>
+                            <td class="p-3 font-medium">Ali Hassan</td>
+                            <td>EMP-1002</td>
+                            <td>DL-BX99211</td>
 
                             <td>
-                                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
-                                    5 Tickets
+                                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
+                                    Expired
                                 </span>
                             </td>
 
-                            <td class="text-right p-3">
+                            <td>
+                                Lorry ABC 5678
+                            </td>
 
-                                <a href="project-view.html"
-                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg
-                                          bg-gray-100 hover:bg-white hover:shadow">
+                            <td class="text-right p-3">
+                                <a href="driver-view.html"
+                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
 
                                     <i data-lucide="eye" class="w-4 h-4"></i>
 
                                 </a>
-
                             </td>
 
                         </tr>
 
                     </tbody>
-
                 </table>
 
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div x-show="open"
+                 x-transition
+                 class="fixed inset-0 flex justify-end bg-black/40">
+
+                <div @click.away="open = false"
+                     class="w-full max-w-md bg-white h-full shadow-xl p-6">
+
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold">Add Driver</h2>
+                        <button @click="open = false">✕</button>
+                    </div>
+
+                    <form class="space-y-4">
+
+                        <div>
+                            <label class="text-sm font-medium">Name</label>
+                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Employee ID</label>
+                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">License Number</label>
+                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Competency Certification</label>
+                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Expiry Date</label>
+                            <input type="date" class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Assigned Equipment</label>
+                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                        </div>
+
+                        <div class="flex justify-end gap-2 pt-4 border-t">
+
+                            <button type="button"
+                                    @click="open = false"
+                                    class="px-4 py-2 border rounded-lg">
+                                Cancel
+                            </button>
+
+                            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Save
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
             </div>
 
             <!-- FOOTER -->
@@ -254,14 +326,17 @@
                 Copyright © 2026 AZCode
             </footer>
 
-        </main>
+    </main>
 
     </div>
 </div>
 
 <script>
-lucide.createIcons();
+    lucide.createIcons();
 </script>
 
 </body>
 </html>
+
+
+    
