@@ -154,9 +154,89 @@
         </header>
 
         <!-- CONTENT -->
-        <main class="p-6 pt-20">
+        <main class="p-6 pt-20 space-y-6">
+            <!-- ================= KPI CARDS ================= -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-            <footer class="mt-10 text-xs text-gray-500 border-t pt-4">
+                <!-- Revenue -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Total Revenue</p>
+                            <h2 class="text-2xl font-bold">$128,450</h2>
+                        </div>
+                        <div class="p-3 bg-green-100 text-green-600 rounded-lg">
+                            <i data-lucide="dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idling Lorry -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Idling Lorries</p>
+                            <h2 class="text-2xl font-bold">12</h2>
+                        </div>
+                        <div class="p-3 bg-red-100 text-red-600 rounded-lg">
+                            <i data-lucide="truck"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Projects -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Active Projects</p>
+                            <h2 class="text-2xl font-bold">7</h2>
+                        </div>
+                        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                            <i data-lucide="folder"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ================= SECOND ROW ================= -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+                <!-- CHART -->
+                <div class="bg-white rounded-xl shadow p-4 lg:col-span-2">
+                    <h3 class="font-semibold mb-4">Revenue Overview</h3>
+
+                    <canvas id="revenueChart" height="120"></canvas>
+                </div>
+
+                <!-- QUICK STATS -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <h3 class="font-semibold mb-4">Fleet Status</h3>
+
+                    <div class="space-y-3">
+
+                        <div class="flex justify-between">
+                            <span>Running</span>
+                            <span class="font-semibold text-green-600">18</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span>Idle</span>
+                            <span class="font-semibold text-yellow-600">12</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span>Maintenance</span>
+                            <span class="font-semibold text-red-600">4</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="text-xs text-gray-500 border-t pt-4">
                 Copyright © 2026. Powered by AZCode
             </footer>
 
@@ -168,6 +248,43 @@
 <script>
     lucide.createIcons();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+const ctx = document.getElementById('revenueChart');
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Revenue',
+            data: [12000, 19000, 15000, 22000, 18000, 26000, 24000],
+            borderWidth: 2,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                grid: {
+                    color: "#eee"
+                }
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
