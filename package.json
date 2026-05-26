@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@tabler/icons-webfont": "^3.34.1",
+    "@tailwindcss/cli": "^4.1.11",
+    "apexcharts": "^5.3.6"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.17"
+  }
+}

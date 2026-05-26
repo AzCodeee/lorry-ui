@@ -1,0 +1,128 @@
+/* ================= APP LAYOUT ================= */
+.app {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #f3f4f6;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #f3f4f6;
+    border-right: 1px solid #e5e7eb;
+}
+
+.sidebar-inner {
+    padding: 16px;
+}
+
+.sidebar-logo img {
+    width: 100%;
+    padding: 10px;
+}
+
+/* ================= NAV ================= */
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #4b5563;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.nav-item.active {
+    background: #fff;
+    font-weight: 600;
+}
+
+/* ================= SUB MENU ================= */
+.nav-sub {
+    list-style: none;
+    padding-left: 18px;
+    margin: 5px 0 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.settings.open .nav-sub {
+    max-height: 200px;
+}
+
+.nav-sub a {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.nav-sub a:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* arrow */
+.arrow {
+    margin-left: auto;
+    transition: 0.3s;
+}
+
+.settings.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* ================= HEADER ================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 260px;
+    right: 0;
+    height: 64px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+}
+
+/* ================= CONTENT ================= */
+.content {
+    margin-left: 260px;
+    padding-top: 80px;
+    padding: 80px 16px 16px;
+}
+
+/* ================= USER ================= */
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-box img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
