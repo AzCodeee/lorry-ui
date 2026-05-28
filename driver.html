@@ -17,18 +17,41 @@
 
 <body class="bg-gray-100 text-gray-700">
 
-<div class="flex">
+<div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
 
     <!-- ================= SIDEBAR ================= -->
-    <aside class="w-64 h-screen bg-gray-100 border-r border-gray-200 fixed">
+    <!-- MOBILE OVERLAY -->
+    <div x-show="sidebar"
+        x-transition
+        class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+        @click="sidebar=false">
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside
+        :class="sidebar ? 'translate-x-0' : '-translate-x-full'"
+        class="fixed lg:translate-x-0 transition-transform duration-300 z-50
+            w-64 h-screen bg-gray-100 border-r border-gray-200">
 
         <!-- LOGO -->
-        <div class="p-4 border-b">
-            <img src="assets/images/logo.png" class="h-30 w-auto" alt="Logo" />
+        <div class="p-4 border-b flex items-center justify-between">
+
+            <img src="assets/images/logo.png"
+                class="h-20 w-auto"
+                alt="Logo" />
+
+            <!-- CLOSE BUTTON MOBILE -->
+            <button class="lg:hidden"
+                    @click="sidebar=false">
+
+                ✕
+
+            </button>
+
         </div>
 
         <!-- NAV -->
-        <nav class="p-2 space-y-1">
+        <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
 
             <!-- Dashboard -->
             <a href="index.html"
@@ -59,7 +82,7 @@
             </a>
 
             <!-- SETTINGS -->
-            <div x-data="{ open: false }" class="space-y-1">
+            <div x-data="{ open: true }" class="space-y-1">
 
                 <button @click="open = !open"
                         class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
@@ -103,14 +126,28 @@
     </aside>
 
     <!-- ================= MAIN ================= -->
-    <div class="flex-1 ml-64">
+    <div class="lg:ml-64 min-h-screen">
 
         <!-- HEADER -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 fixed w-[calc(100%-16rem)]">
+        <header class="fixed top-0 right-0 left-0 lg:left-64
+               h-16 bg-white border-b border-gray-200
+               flex items-center justify-between px-4 lg:px-6 z-30">
 
-            <h1 class="text-lg font-semibold uppercase">
-                Fleet Management System
-            </h1>
+            <div class="flex items-center gap-3">
+
+                <!-- MOBILE MENU -->
+                <button class="lg:hidden"
+                        @click="sidebar=true">
+
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+
+                </button>
+
+                <h1 class="text-sm lg:text-lg font-semibold uppercase">
+                    Fleet Management System
+                </h1>
+
+            </div>
 
             <!-- PROFILE DROPDOWN -->
             <div x-data="{ open: false }" class="relative">
@@ -172,7 +209,7 @@
                 </div>
 
                 <button @click="open = true"
-                        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                        class="bg-green-600 text-white px-3 py-2 text-sm lg:px-4 lg:text-base rounded-lg hover:bg-green-700">
                     + Add Driver
                 </button>
 
@@ -188,7 +225,8 @@
                            class="border rounded-lg px-3 py-2 w-64">
                 </div>
 
-                <table class="w-full text-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
 
                     <thead class="bg-gray-50 text-left">
                         <tr>
@@ -261,6 +299,7 @@
 
                     </tbody>
                 </table>
+                </div>
 
             </div>
 
@@ -270,61 +309,82 @@
                  class="fixed inset-0 flex justify-end bg-black/40">
 
                 <div @click.away="open = false"
-                     class="w-full max-w-md bg-white h-full shadow-xl p-6">
+                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
 
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-semibold">Add Driver</h2>
-                        <button @click="open = false">✕</button>
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-center p-6 border-b">
+
+                        <h2 class="text-lg font-semibold">
+                            Add Driver
+                        </h2>
+
+                        <button @click="open = false"
+                                class="text-gray-500 hover:text-black">
+                            ✕
+                        </button>
+
                     </div>
 
-                    <form class="space-y-4">
+                    <div class="flex-1 overflow-y-auto p-6">
 
-                        <div>
-                            <label class="text-sm font-medium">Name</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                        <form class="space-y-4">
 
-                        <div>
-                            <label class="text-sm font-medium">Employee ID</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Name</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">License Number</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Employee ID</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Competency Certification</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">License Number</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Expiry Date</label>
-                            <input type="date" class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Competency Certification</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Assigned Equipment</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Expiry Date</label>
+                                <input type="date" class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div class="flex justify-end gap-2 pt-4 border-t">
+                            <div>
+                                <label class="text-sm font-medium">Assigned Equipment</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                            <button type="button"
-                                    @click="open = false"
-                                    class="px-4 py-2 border rounded-lg">
-                                Cancel
-                            </button>
+                            <div>
+                                <label class="text-sm font-medium">Phone Number</label>
 
-                            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                Save
-                            </button>
+                                <input x-model="form.phone"
+                                        class="w-full border rounded-lg p-2">
+                            </div>
+                        </form>
+                    </div>
+                    <!-- FOOTER -->
+                    <div class="border-t p-6 flex justify-end gap-2">
 
-                        </div>
+                        <button type="button"
+                                @click="open = false"
+                                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
 
-                    </form>
+                            Cancel
 
+                        </button>
+
+                        <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+
+                            Save Driver
+
+                        </button>
+
+                    </div>
                 </div>
             </div>
 

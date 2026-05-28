@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ticket View</title>
+    <title>Maintenance View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,68 +16,39 @@
 <div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
 
     <!-- ================= SIDEBAR ================= -->
-    <!-- MOBILE OVERLAY -->
-    <div x-show="sidebar"
-        x-transition
-        class="fixed inset-0 bg-black/40 z-40 lg:hidden"
-        @click="sidebar=false">
-    </div>
+    <aside class="w-64 h-screen bg-gray-100 border-r border-gray-200 fixed">
 
-    <!-- SIDEBAR -->
-    <aside
-        :class="sidebar ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed lg:translate-x-0 transition-transform duration-300 z-50
-            w-64 h-screen bg-gray-100 border-r border-gray-200">
-
-        <!-- LOGO -->
-        <div class="p-4 border-b flex items-center justify-between">
-
-            <img src="assets/images/logo.png"
-                class="h-20 w-auto"
-                alt="Logo" />
-
-            <!-- CLOSE BUTTON MOBILE -->
-            <button class="lg:hidden"
-                    @click="sidebar=false">
-
-                ✕
-
-            </button>
-
+        <div class="p-4 border-b">
+            <img src="assets/images/logo.png" class="h-30 w-auto" alt="Logo" />
         </div>
 
-        <!-- NAV -->
-        <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
+        <nav class="p-2 space-y-1">
 
-            <!-- Dashboard -->
             <a href="index.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                 Dashboard
             </a>
 
-            <!-- Project -->
             <a href="project.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="folder" class="w-5 h-5"></i>
                 Project
             </a>
 
-            <!-- Ticket -->
             <a href="ticket.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="ticket" class="w-5 h-5"></i>
                 Ticket
             </a>
 
             <a href="maintenance.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
                 <i data-lucide="wrench" class="w-5 h-5"></i>
                 Maintenance
-
             </a>
 
-            <!-- SETTINGS -->
+             <!-- SETTINGS -->
             <div x-data="{ open: false }" class="space-y-1">
 
                 <button @click="open = !open"
@@ -117,10 +88,8 @@
                 </div>
 
             </div>
-
         </nav>
     </aside>
-
 
     <!-- ================= MAIN ================= -->
     <div class="lg:ml-64 min-h-screen">
@@ -146,15 +115,13 @@
 
             </div>
 
-            <!-- PROFILE DROPDOWN -->
             <div x-data="{ open: false }" class="relative">
 
-                <!-- TRIGGER -->
                 <button @click="open = !open"
                         class="flex items-center gap-3 focus:outline-none">
 
                     <img src="assets/images/avatar-2.jpg"
-                        class="w-10 h-10 rounded-full border" />
+                         class="w-10 h-10 rounded-full border" />
 
                     <div class="text-sm text-left">
                         <div class="font-medium">Aaron Chia</div>
@@ -163,26 +130,22 @@
 
                 </button>
 
-                <!-- DROPDOWN -->
                 <div x-show="open"
-                    @click.away="open = false"
-                    x-transition
-                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                     @click.away="open = false"
+                     x-transition
+                     class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
 
-                    <!-- PROFILE -->
                     <a href="profile.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
+                       class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
 
                         <i data-lucide="user-circle" class="w-4 h-4"></i>
                         Profile
                     </a>
 
-                    <!-- DIVIDER -->
                     <div class="border-t"></div>
 
-                    <!-- LOGOUT -->
                     <a href="logout.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                       class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
 
                         <i data-lucide="log-out" class="w-4 h-4"></i>
                         Logout
@@ -194,46 +157,61 @@
 
         </header>
 
-        <main class="pt-20 p-6" x-data="{ edit:false, menu:false }">
+        <!-- CONTENT -->
+        <main class="pt-20 p-6"
+              x-data="{ edit:false, menu:false }">
 
-            <!-- ================= TICKET CARD ================= -->
+            <!-- ================= MAINTENANCE CARD ================= -->
             <div class="bg-white rounded-xl shadow p-6">
 
                 <!-- TOP -->
                 <div class="flex justify-between items-start">
 
                     <div>
-                        <h2 class="text-xl font-semibold">#TK-1001 Engine Issue</h2>
-                        <p class="text-sm text-gray-500">Project Alpha</p>
+                        <h2 class="text-xl font-semibold">
+                            JQX 8821 - Engine Overheating
+                        </h2>
+
+                        <p class="text-sm text-gray-500">
+                            Cooling system maintenance
+                        </p>
                     </div>
 
                     <div class="flex items-center gap-3">
 
                         <!-- STATUS -->
                         <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
-                            Pending
+                            In Repair
                         </span>
 
-                        <!-- 3 DOT MENU -->
+                        <!-- MENU -->
                         <div class="relative">
 
-                            <button @click="menu=!menu" class="p-2 hover:bg-gray-100 rounded-lg">
+                            <button @click="menu = !menu"
+                                    class="p-2 hover:bg-gray-100 rounded-lg">
+
                                 <i data-lucide="more-vertical" class="w-5 h-5"></i>
+
                             </button>
 
+                            <!-- DROPDOWN -->
                             <div x-show="menu"
-                                 @click.away="menu=false"
+                                 @click.away="menu = false"
                                  class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow z-50">
 
                                 <button @click="edit=true; menu=false"
-                                        class="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-2">
+                                        class="w-full flex items-center gap-2 px-4 py-2 text-left hover:bg-gray-100">
+
                                     <i data-lucide="edit-3" class="w-4 h-4"></i>
                                     Edit
+
                                 </button>
 
-                                <button class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex gap-2">
+                                <button class="w-full flex items-center gap-2 px-4 py-2 text-left text-red-600 hover:bg-red-50">
+
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     Delete
+
                                 </button>
 
                             </div>
@@ -248,60 +226,65 @@
                 <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
 
                     <div>
-                        <p class="text-gray-500">Loading Site</p>
-                        <p class="font-semibold">KL Quarry</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Dumping Site</p>
-                        <p class="font-semibold">Cyberjaya Site A</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Driver</p>
-                        <p class="font-semibold">John Tan</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Lorry</p>
+                        <p class="text-gray-500">Lorry Number</p>
                         <p class="font-semibold">JQX 8821</p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Priority</p>
-                        <p class="font-semibold text-red-600">High</p>
+                        <p class="text-gray-500">Issue</p>
+                        <p class="font-semibold">Engine Overheating</p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Created Date</p>
+                        <p class="text-gray-500">Root Cause</p>
+                        <p class="font-semibold">Cooling System Failure</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Maintenance Date</p>
                         <p class="font-semibold">2026-05-28</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Assigned Technician</p>
+                        <p class="font-semibold">Michael Lee</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Repair Cost</p>
+                        <p class="font-semibold">RM 2,500</p>
                     </div>
 
                 </div>
 
                 <!-- DESCRIPTION -->
                 <div class="mt-6">
-                    <p class="text-gray-500 text-sm">Description</p>
-                    <p class="mt-1 text-sm">
-                        Engine overheating issue detected during uphill transport. Needs inspection.
+
+                    <p class="text-gray-500 text-sm">
+                        Maintenance Notes
                     </p>
+
+                    <p class="mt-1 text-sm">
+                        Cooling fan and radiator pipe inspection required due to repeated overheating during heavy transport operation.
+                    </p>
+
                 </div>
 
             </div>
 
             <!-- ================= EDIT OFFCANVAS ================= -->
             <div x-show="edit"
-                class="fixed inset-0 flex justify-end bg-black/40 z-50">
+                 class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
                 <div @click.away="edit = false"
-                    x-data="editTicket()"
-                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+                     x-data="editMaintenance()"
+                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
 
                     <!-- HEADER -->
                     <div class="flex justify-between items-center p-6 border-b">
 
                         <h2 class="text-lg font-semibold">
-                            Edit Ticket
+                            Edit Maintenance
                         </h2>
 
                         <button @click="edit = false"
@@ -316,71 +299,102 @@
 
                         <form class="space-y-4">
 
-                            <!-- Title -->
-                            <div>
-                                <label class="text-sm font-medium">Title</label>
-                                <input x-model="form.title"
-                                    class="w-full border rounded-lg p-2">
-                            </div>
-
-                            <!-- Loading Site -->
-                            <div>
-                                <label class="text-sm font-medium">Loading Site</label>
-                                <select x-model="form.loadingSite"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>KL Quarry</option>
-                                    <option>Shah Alam Warehouse</option>
-                                </select>
-                            </div>
-
-                            <!-- Dumping Site -->
-                            <div>
-                                <label class="text-sm font-medium">Dumping Site</label>
-                                <select x-model="form.dumpingSite"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>Cyberjaya Construction Site</option>
-                                    <option>Putrajaya Site A</option>
-                                    <option>Bangi Disposal Area</option>
-                                </select>
-                            </div>
-
-                            <!-- Driver -->
-                            <div>
-                                <label class="text-sm font-medium">Assigned Driver</label>
-                                <select x-model="form.driver"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>John Tan</option>
-                                    <option>Ahmad Faiz</option>
-                                </select>
-                            </div>
-
                             <!-- Lorry -->
                             <div>
-                                <label class="text-sm font-medium">Assigned Lorry</label>
+                                <label class="text-sm font-medium">Lorry</label>
+
                                 <select x-model="form.lorry"
                                         class="w-full border rounded-lg p-2">
+
                                     <option>JQX 8821</option>
                                     <option>VBL 1022</option>
+
                                 </select>
                             </div>
 
-                            <!-- Priority -->
+                            <!-- Issue -->
                             <div>
-                                <label class="text-sm font-medium">Priority</label>
-                                <select x-model="form.priority"
+                                <label class="text-sm font-medium">
+                                    Issue / What to Fix
+                                </label>
+
+                                <input x-model="form.issue"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- Root Cause -->
+                            <div>
+                                <label class="text-sm font-medium">
+                                    Root Cause
+                                </label>
+
+                                <textarea x-model="form.rootCause"
+                                          rows="3"
+                                          class="w-full border rounded-lg p-2"></textarea>
+                            </div>
+
+                            <!-- Date -->
+                            <div>
+                                <label class="text-sm font-medium">
+                                    Date
+                                </label>
+
+                                <input type="date"
+                                       x-model="form.date"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- Technician -->
+                            <div>
+                                <label class="text-sm font-medium">
+                                    Assigned Technician
+                                </label>
+
+                                <select x-model="form.technician"
                                         class="w-full border rounded-lg p-2">
-                                    <option>Low</option>
-                                    <option>Medium</option>
-                                    <option>High</option>
+
+                                    <option>Michael Lee</option>
+                                    <option>Daniel Wong</option>
+
                                 </select>
                             </div>
 
-                            <!-- Description -->
+                            <!-- Cost -->
                             <div>
-                                <label class="text-sm font-medium">Description</label>
-                                <textarea x-model="form.description"
-                                        class="w-full border rounded-lg p-2"
-                                        rows="3"></textarea>
+                                <label class="text-sm font-medium">
+                                    Repair Cost
+                                </label>
+
+                                <input type="text"
+                                       x-model="form.cost"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- Status -->
+                            <div>
+                                <label class="text-sm font-medium">
+                                    Status
+                                </label>
+
+                                <select x-model="form.status"
+                                        class="w-full border rounded-lg p-2">
+
+                                    <option>Pending</option>
+                                    <option>In Repair</option>
+                                    <option>Fixed</option>
+
+                                </select>
+                            </div>
+
+                            <!-- Notes -->
+                            <div>
+                                <label class="text-sm font-medium">
+                                    Maintenance Notes
+                                </label>
+
+                                <textarea x-model="form.notes"
+                                          rows="4"
+                                          class="w-full border rounded-lg p-2"></textarea>
                             </div>
 
                         </form>
@@ -393,16 +407,21 @@
                         <button type="button"
                                 @click="edit = false"
                                 class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+
                             Cancel
+
                         </button>
 
                         <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Save Ticket
+
+                            Save Maintenance
+
                         </button>
 
                     </div>
 
                 </div>
+
             </div>
 
             <!-- FOOTER -->
@@ -419,20 +438,23 @@
 <script>
 lucide.createIcons();
 </script>
+
 <script>
-function editTicket() {
+function editMaintenance() {
     return {
         form: {
-            title: "#TK-1001 Engine Issue",
-            loadingSite: "KL Quarry",
-            dumpingSite: "Cyberjaya Construction Site",
-            driver: "John Tan",
             lorry: "JQX 8821",
-            priority: "Medium",
-            description: "Engine overheating issue detected"
+            issue: "Engine Overheating",
+            rootCause: "Cooling System Failure",
+            date: "2026-05-28",
+            technician: "Michael Lee",
+            cost: "RM 2,500",
+            status: "In Repair",
+            notes: "Cooling fan and radiator pipe inspection required."
         }
     }
 }
 </script>
+
 </body>
 </html>

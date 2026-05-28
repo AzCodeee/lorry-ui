@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ticket View</title>
+    <title>Driver View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,6 @@
 
 <div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
 
-    <!-- ================= SIDEBAR ================= -->
     <!-- MOBILE OVERLAY -->
     <div x-show="sidebar"
         x-transition
@@ -49,36 +48,32 @@
         <!-- NAV -->
         <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
 
-            <!-- Dashboard -->
             <a href="index.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                 Dashboard
             </a>
 
-            <!-- Project -->
             <a href="project.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="folder" class="w-5 h-5"></i>
                 Project
             </a>
 
-            <!-- Ticket -->
             <a href="ticket.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="ticket" class="w-5 h-5"></i>
                 Ticket
             </a>
 
             <a href="maintenance.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="wrench" class="w-5 h-5"></i>
                 Maintenance
-
             </a>
 
             <!-- SETTINGS -->
-            <div x-data="{ open: false }" class="space-y-1">
+            <div x-data="{ open: true }" class="space-y-1">
 
                 <button @click="open = !open"
                         class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
@@ -87,28 +82,28 @@
                     Settings
 
                     <i data-lucide="chevron-down"
-                    class="w-4 h-4 ml-auto transition-transform"
-                    :class="{ 'rotate-180': open }"></i>
+                       class="w-4 h-4 ml-auto transition-transform"
+                       :class="{ 'rotate-180': open }"></i>
                 </button>
 
-                <div x-show="open" x-transition class="pl-8 space-y-1">
+                <div x-show="open" class="pl-8 space-y-1">
 
                     <a href="driver.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
 
                         <i data-lucide="user" class="w-4 h-4"></i>
                         Driver
                     </a>
 
                     <a href="sites.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
                         Sites
                     </a>
 
                     <a href="lorry.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
                         <i data-lucide="truck" class="w-4 h-4"></i>
                         Lorry
@@ -121,7 +116,6 @@
         </nav>
     </aside>
 
-
     <!-- ================= MAIN ================= -->
     <div class="lg:ml-64 min-h-screen">
 
@@ -131,7 +125,6 @@
                flex items-center justify-between px-4 lg:px-6 z-30">
 
             <div class="flex items-center gap-3">
-
                 <!-- MOBILE MENU -->
                 <button class="lg:hidden"
                         @click="sidebar=true">
@@ -146,15 +139,14 @@
 
             </div>
 
-            <!-- PROFILE DROPDOWN -->
+            <!-- PROFILE -->
             <div x-data="{ open: false }" class="relative">
 
-                <!-- TRIGGER -->
                 <button @click="open = !open"
                         class="flex items-center gap-3 focus:outline-none">
 
                     <img src="assets/images/avatar-2.jpg"
-                        class="w-10 h-10 rounded-full border" />
+                         class="w-10 h-10 rounded-full border" />
 
                     <div class="text-sm text-left">
                         <div class="font-medium">Aaron Chia</div>
@@ -163,77 +155,65 @@
 
                 </button>
 
-                <!-- DROPDOWN -->
-                <div x-show="open"
-                    @click.away="open = false"
-                    x-transition
-                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-
-                    <!-- PROFILE -->
-                    <a href="profile.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
-
-                        <i data-lucide="user-circle" class="w-4 h-4"></i>
-                        Profile
-                    </a>
-
-                    <!-- DIVIDER -->
-                    <div class="border-t"></div>
-
-                    <!-- LOGOUT -->
-                    <a href="logout.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-
-                        <i data-lucide="log-out" class="w-4 h-4"></i>
-                        Logout
-                    </a>
-
-                </div>
-
             </div>
 
         </header>
 
-        <main class="pt-20 p-6" x-data="{ edit:false, menu:false }">
+        <!-- CONTENT -->
+        <main class="pt-20 p-6"
+              x-data="{ edit:false, menu:false }">
 
-            <!-- ================= TICKET CARD ================= -->
+            <!-- ================= DRIVER CARD ================= -->
             <div class="bg-white rounded-xl shadow p-6">
 
                 <!-- TOP -->
                 <div class="flex justify-between items-start">
 
                     <div>
-                        <h2 class="text-xl font-semibold">#TK-1001 Engine Issue</h2>
-                        <p class="text-sm text-gray-500">Project Alpha</p>
+                        <h2 class="text-xl font-semibold">
+                            John Tan
+                        </h2>
+
+                        <p class="text-sm text-gray-500">
+                            EMP-1001
+                        </p>
                     </div>
 
                     <div class="flex items-center gap-3">
 
                         <!-- STATUS -->
-                        <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
-                            Pending
+                        <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded">
+                            Active
                         </span>
 
-                        <!-- 3 DOT MENU -->
+                        <!-- 3 DOT -->
                         <div class="relative">
 
-                            <button @click="menu=!menu" class="p-2 hover:bg-gray-100 rounded-lg">
+                            <button @click="menu=!menu"
+                                    class="p-2 hover:bg-gray-100 rounded-lg">
+
                                 <i data-lucide="more-vertical" class="w-5 h-5"></i>
+
                             </button>
 
+                            <!-- MENU -->
                             <div x-show="menu"
                                  @click.away="menu=false"
                                  class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow z-50">
 
                                 <button @click="edit=true; menu=false"
-                                        class="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-2">
+                                        class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
+
                                     <i data-lucide="edit-3" class="w-4 h-4"></i>
                                     Edit
+
                                 </button>
 
-                                <button class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex gap-2">
+                                <button class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex items-center gap-2">
+
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     Delete
+
                                 </button>
 
                             </div>
@@ -248,60 +228,73 @@
                 <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
 
                     <div>
-                        <p class="text-gray-500">Loading Site</p>
-                        <p class="font-semibold">KL Quarry</p>
+                        <p class="text-gray-500">Employee ID</p>
+                        <p class="font-semibold">EMP-1001</p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Dumping Site</p>
-                        <p class="font-semibold">Cyberjaya Site A</p>
+                        <p class="text-gray-500">License Number</p>
+                        <p class="font-semibold">DL-AX83921</p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Driver</p>
-                        <p class="font-semibold">John Tan</p>
+                        <p class="text-gray-500">License Expiry</p>
+                        <p class="font-semibold text-yellow-600">
+                            2026-08-12
+                        </p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Lorry</p>
-                        <p class="font-semibold">JQX 8821</p>
+                        <p class="text-gray-500">Certification</p>
+                        <p class="font-semibold">
+                            Heavy Vehicle Certification
+                        </p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Priority</p>
-                        <p class="font-semibold text-red-600">High</p>
+                        <p class="text-gray-500">Assigned Equipment</p>
+                        <p class="font-semibold">
+                            Truck WXY 1234
+                        </p>
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Created Date</p>
-                        <p class="font-semibold">2026-05-28</p>
+                        <p class="text-gray-500">Phone Number</p>
+                        <p class="font-semibold">
+                            +60 12-345 6789
+                        </p>
                     </div>
 
                 </div>
 
-                <!-- DESCRIPTION -->
+                <!-- NOTES -->
                 <div class="mt-6">
-                    <p class="text-gray-500 text-sm">Description</p>
-                    <p class="mt-1 text-sm">
-                        Engine overheating issue detected during uphill transport. Needs inspection.
+
+                    <p class="text-gray-500 text-sm">
+                        Notes
                     </p>
+
+                    <p class="mt-1 text-sm">
+                        Experienced heavy vehicle driver assigned for long-distance transportation projects.
+                    </p>
+
                 </div>
 
             </div>
 
             <!-- ================= EDIT OFFCANVAS ================= -->
             <div x-show="edit"
-                class="fixed inset-0 flex justify-end bg-black/40 z-50">
+                 class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
                 <div @click.away="edit = false"
-                    x-data="editTicket()"
-                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+                     x-data="editDriver()"
+                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
 
                     <!-- HEADER -->
                     <div class="flex justify-between items-center p-6 border-b">
 
                         <h2 class="text-lg font-semibold">
-                            Edit Ticket
+                            Edit Driver
                         </h2>
 
                         <button @click="edit = false"
@@ -316,71 +309,84 @@
 
                         <form class="space-y-4">
 
-                            <!-- Title -->
+                            <!-- NAME -->
                             <div>
-                                <label class="text-sm font-medium">Title</label>
-                                <input x-model="form.title"
-                                    class="w-full border rounded-lg p-2">
+                                <label class="text-sm font-medium">Name</label>
+
+                                <input x-model="form.name"
+                                       class="w-full border rounded-lg p-2">
                             </div>
 
-                            <!-- Loading Site -->
+                            <!-- EMPLOYEE ID -->
                             <div>
-                                <label class="text-sm font-medium">Loading Site</label>
-                                <select x-model="form.loadingSite"
+                                <label class="text-sm font-medium">Employee ID</label>
+
+                                <input x-model="form.employeeId"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- LICENSE -->
+                            <div>
+                                <label class="text-sm font-medium">License Number</label>
+
+                                <input x-model="form.license"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- CERTIFICATION -->
+                            <div>
+                                <label class="text-sm font-medium">Certification</label>
+
+                                <input x-model="form.certification"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- EXPIRY -->
+                            <div>
+                                <label class="text-sm font-medium">Expiry Date</label>
+
+                                <input type="date"
+                                       x-model="form.expiry"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- EQUIPMENT -->
+                            <div>
+                                <label class="text-sm font-medium">Assigned Equipment</label>
+
+                                <input x-model="form.equipment"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- PHONE -->
+                            <div>
+                                <label class="text-sm font-medium">Phone Number</label>
+
+                                <input x-model="form.phone"
+                                       class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- STATUS -->
+                            <div>
+                                <label class="text-sm font-medium">Status</label>
+
+                                <select x-model="form.status"
                                         class="w-full border rounded-lg p-2">
-                                    <option>KL Quarry</option>
-                                    <option>Shah Alam Warehouse</option>
+
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                    <option>Suspended</option>
+
                                 </select>
                             </div>
 
-                            <!-- Dumping Site -->
+                            <!-- NOTES -->
                             <div>
-                                <label class="text-sm font-medium">Dumping Site</label>
-                                <select x-model="form.dumpingSite"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>Cyberjaya Construction Site</option>
-                                    <option>Putrajaya Site A</option>
-                                    <option>Bangi Disposal Area</option>
-                                </select>
-                            </div>
+                                <label class="text-sm font-medium">Notes</label>
 
-                            <!-- Driver -->
-                            <div>
-                                <label class="text-sm font-medium">Assigned Driver</label>
-                                <select x-model="form.driver"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>John Tan</option>
-                                    <option>Ahmad Faiz</option>
-                                </select>
-                            </div>
-
-                            <!-- Lorry -->
-                            <div>
-                                <label class="text-sm font-medium">Assigned Lorry</label>
-                                <select x-model="form.lorry"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>JQX 8821</option>
-                                    <option>VBL 1022</option>
-                                </select>
-                            </div>
-
-                            <!-- Priority -->
-                            <div>
-                                <label class="text-sm font-medium">Priority</label>
-                                <select x-model="form.priority"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>Low</option>
-                                    <option>Medium</option>
-                                    <option>High</option>
-                                </select>
-                            </div>
-
-                            <!-- Description -->
-                            <div>
-                                <label class="text-sm font-medium">Description</label>
-                                <textarea x-model="form.description"
-                                        class="w-full border rounded-lg p-2"
-                                        rows="3"></textarea>
+                                <textarea x-model="form.notes"
+                                          rows="4"
+                                          class="w-full border rounded-lg p-2"></textarea>
                             </div>
 
                         </form>
@@ -393,16 +399,21 @@
                         <button type="button"
                                 @click="edit = false"
                                 class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+
                             Cancel
+
                         </button>
 
                         <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Save Ticket
+
+                            Save Driver
+
                         </button>
 
                     </div>
 
                 </div>
+
             </div>
 
             <!-- FOOTER -->
@@ -419,20 +430,24 @@
 <script>
 lucide.createIcons();
 </script>
+
 <script>
-function editTicket() {
+function editDriver() {
     return {
         form: {
-            title: "#TK-1001 Engine Issue",
-            loadingSite: "KL Quarry",
-            dumpingSite: "Cyberjaya Construction Site",
-            driver: "John Tan",
-            lorry: "JQX 8821",
-            priority: "Medium",
-            description: "Engine overheating issue detected"
+            name: "John Tan",
+            employeeId: "EMP-1001",
+            license: "DL-AX83921",
+            certification: "Heavy Vehicle Certification",
+            expiry: "2026-08-12",
+            equipment: "Truck WXY 1234",
+            phone: "+60 12-345 6789",
+            status: "Active",
+            notes: "Experienced heavy vehicle driver assigned for long-distance transportation projects."
         }
     }
 }
 </script>
+
 </body>
 </html>
