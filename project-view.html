@@ -160,42 +160,135 @@
 
         <main class="pt-20 p-6" x-data="{ open:false }">
 
-            <!-- ================= PROJECT INFO CARD ================= -->
-            <div class="bg-white rounded-xl shadow p-6 mb-6">
+        <!-- ================= PROJECT INFO CARD ================= -->
+        <div class="bg-white rounded-xl shadow p-6 mb-6" x-data="{ menu:false, edit:false }">
 
-                <div class="flex justify-between items-start">
+            <!-- TOP ROW -->
+            <div class="flex justify-between items-start relative">
 
-                    <div>
-                        <h2 class="text-xl font-semibold">Project Alpha</h2>
-                        <p class="text-sm text-gray-500">HQ Kuala Lumpur</p>
-                    </div>
+                <div>
+                    <h2 class="text-xl font-semibold">Project Alpha</h2>
+                    <p class="text-sm text-gray-500">HQ Kuala Lumpur</p>
+                </div>
 
+                <div class="flex items-center gap-3">
+
+                    <!-- STATUS -->
                     <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
                         In Progress
                     </span>
 
+                    <!-- 3 DOT MENU -->
+                    <div class="relative">
+
+                        <button @click="menu = !menu"
+                                class="p-2 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                        </button>
+
+                        <!-- DROPDOWN -->
+                        <div x-show="menu"
+                            @click.away="menu=false"
+                            x-transition
+                            class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-50">
+
+                            <!-- EDIT -->
+                            <button @click="edit = true; menu = false"
+                                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                Edit
+                            </button>
+
+                            <!-- DELETE -->
+                            <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                Delete
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- INFO GRID -->
+            <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
+
+                <div>
+                    <p class="text-gray-500">Total Tickets</p>
+                    <p class="font-semibold">1</p>
                 </div>
 
-                <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
+                <div>
+                    <p class="text-gray-500">Created Date</p>
+                    <p class="font-semibold">2026-05-20</p>
+                </div>
 
-                    <div>
-                        <p class="text-gray-500">Total Tickets</p>
-                        <p class="font-semibold">1</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Created Date</p>
-                        <p class="font-semibold">2026-05-20</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Description</p>
-                        <p class="font-semibold">Road construction project monitoring</p>
-                    </div>
-
+                <div>
+                    <p class="text-gray-500">Description</p>
+                    <p class="font-semibold">Road construction project monitoring</p>
                 </div>
 
             </div>
+
+            <!-- ================= EDIT OFFCANVAS ================= -->
+            <div x-show="edit"
+                class="fixed inset-0 flex justify-end bg-black/40 z-50">
+
+                <div @click.away="edit=false"
+                    class="w-full max-w-md bg-white h-full shadow-xl p-6 overflow-y-auto">
+
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-semibold">Edit Project</h2>
+                        <button @click="edit=false" class="text-xl">✕</button>
+                    </div>
+
+                    <!-- FORM -->
+                    <form class="space-y-4">
+
+                        <div>
+                            <label class="text-sm font-medium">Project Name</label>
+                            <input type="text"
+                                value="Project Alpha"
+                                class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Site</label>
+                            <input type="text"
+                                value="HQ Kuala Lumpur"
+                                class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Description</label>
+                            <textarea rows="3"
+                                    class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">Road construction project monitoring</textarea>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="flex justify-end gap-2 pt-4 border-t">
+
+                            <button type="button"
+                                    @click="edit=false"
+                                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                                Cancel
+                            </button>
+
+                            <button type="submit"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
 
             <!-- ================= TICKETS CARD ================= -->
             <div class="bg-white rounded-xl shadow">
