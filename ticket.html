@@ -52,6 +52,13 @@
                 Ticket
             </a>
 
+            <a href="maintenance.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                <i data-lucide="wrench" class="w-5 h-5"></i>
+                Maintenance
+
+            </a>
+
             <!-- SETTINGS -->
             <div x-data="{ open: false }" class="space-y-1">
 
@@ -184,11 +191,14 @@
                 </div>
 
                 <table class="w-full text-sm">
-
                     <thead class="bg-gray-50 text-left">
                         <tr>
                             <th class="p-3">Ticket ID</th>
-                            <th>Title</th>
+                            <th>Project</th>
+                            <th>Loading Site</th>
+                            <th>Dumping Site</th>
+                            <th>Driver</th>
+                            <th>Lorry</th>
                             <th>Status</th>
                             <th>Priority</th>
                             <th class="text-right p-3">Action</th>
@@ -197,51 +207,170 @@
 
                     <tbody>
 
+                        <!-- ROW 1 -->
                         <tr class="border-t hover:bg-gray-50">
-                            <td class="p-3">#TK-1001</td>
-                            <td>Engine issue on truck</td>
+
+                            <td class="p-3 font-medium">
+                                #TK-1001
+                            </td>
+
+                            <td>
+                                Project Alpha
+                            </td>
+
+                            <td>
+                                KL Quarry
+                            </td>
+
+                            <td>
+                                Cyberjaya Site A
+                            </td>
+
+                            <td>
+                                John Tan
+                            </td>
+
+                            <td>
+                                JQX 8821
+                            </td>
+
                             <td>
                                 <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
                                     Pending
                                 </span>
                             </td>
+
                             <td>
                                 <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
                                     High
                                 </span>
                             </td>
+
                             <td class="text-right p-3">
+
                                 <a href="ticket-view.html"
-                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                class="inline-flex items-center justify-center
+                                        w-9 h-9 rounded-lg
+                                        bg-gray-100 hover:bg-white hover:shadow">
 
                                     <i data-lucide="eye" class="w-4 h-4"></i>
 
                                 </a>
+
                             </td>
+
                         </tr>
 
+                        <!-- ROW 2 -->
                         <tr class="border-t hover:bg-gray-50">
-                            <td class="p-3">#TK-1002</td>
-                            <td>GPS not working</td>
+
+                            <td class="p-3 font-medium">
+                                #TK-1002
+                            </td>
+
+                            <td>
+                                Project Beta
+                            </td>
+
+                            <td>
+                                Shah Alam Warehouse
+                            </td>
+
+                            <td>
+                                Putrajaya Construction
+                            </td>
+
+                            <td>
+                                Ahmad Faiz
+                            </td>
+
+                            <td>
+                                VBL 1022
+                            </td>
+
                             <td>
                                 <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                                    Resolved
+                                    Ongoing
                                 </span>
                             </td>
+
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                    Medium
+                                </span>
+                            </td>
+
+                            <td class="text-right p-3">
+
+                                <a href="ticket-view.html"
+                                class="inline-flex items-center justify-center
+                                        w-9 h-9 rounded-lg
+                                        bg-gray-100 hover:bg-white hover:shadow">
+
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        <!-- ROW 3 -->
+                        <tr class="border-t hover:bg-gray-50">
+
+                            <td class="p-3 font-medium">
+                                #TK-1003
+                            </td>
+
+                            <td>
+                                Project Gamma
+                            </td>
+
+                            <td>
+                                Johor Plant
+                            </td>
+
+                            <td>
+                                Bangi Disposal Area
+                            </td>
+
+                            <td>
+                                Kelvin Wong
+                            </td>
+
+                            <td>
+                                WXY 3321
+                            </td>
+
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
+                                    Completed
+                                </span>
+                            </td>
+
                             <td>
                                 <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700">
                                     Low
                                 </span>
                             </td>
+
                             <td class="text-right p-3">
+
                                 <a href="ticket-view.html"
-                                   class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                class="inline-flex items-center justify-center
+                                        w-9 h-9 rounded-lg
+                                        bg-gray-100 hover:bg-white hover:shadow">
+
                                     <i data-lucide="eye" class="w-4 h-4"></i>
+
                                 </a>
+
                             </td>
+
                         </tr>
 
                     </tbody>
+
                 </table>
 
             </div>
@@ -252,41 +381,118 @@
                  class="fixed inset-0 flex justify-end bg-black/40">
 
                 <div @click.away="open = false"
-                     class="w-full max-w-md bg-white h-full shadow-xl p-6">
+                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
 
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-semibold">Add Ticket</h2>
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-center p-6 border-b">
 
-                        <button @click="open = false" class="text-gray-500">✕</button>
+                        <h2 class="text-lg font-semibold">
+                            Add Ticket
+                        </h2>
+
+                        <button @click="open = false"
+                                class="text-gray-500 hover:text-black">
+                            ✕
+                        </button>
+
                     </div>
 
-                    <form class="space-y-4">
+                    <!-- BODY -->
+                    <div class="flex-1 overflow-y-auto p-6">
 
-                        <div>
-                            <label class="text-sm font-medium">Title</label>
-                            <input type="text" class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                        <form class="space-y-4">
 
-                        <div>
-                            <label class="text-sm font-medium">Description</label>
-                            <textarea class="w-full border rounded-lg px-3 py-2 mt-1"></textarea>
-                        </div>
+                            <!-- Ticket Title -->
+                            <div>
+                                <label class="text-sm font-medium">Title</label>
 
-                        <div class="flex justify-end gap-2 pt-4 border-t">
+                                <input type="text"
+                                    class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                            <button type="button"
-                                    @click="open = false"
-                                    class="px-4 py-2 border rounded-lg">
-                                Cancel
-                            </button>
+                            <!-- Loading Site -->
+                            <div>
+                                <label class="text-sm font-medium">Loading Site</label>
 
-                            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                Save
-                            </button>
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+                                    <option>Select Loading Site</option>
+                                    <option>KL Quarry</option>
+                                    <option>Shah Alam Warehouse</option>
+                                    <option>Johor Plant</option>
+                                </select>
+                            </div>
 
-                        </div>
+                            <!-- Dumping Site -->
+                            <div>
+                                <label class="text-sm font-medium">Dumping Site</label>
 
-                    </form>
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+                                    <option>Select Dumping Site</option>
+                                    <option>Cyberjaya Construction Site</option>
+                                    <option>Putrajaya Site A</option>
+                                    <option>Bangi Disposal Area</option>
+                                </select>
+                            </div>
+
+                            <!-- Assigned Driver -->
+                            <div>
+                                <label class="text-sm font-medium">Assigned Driver</label>
+
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+                                    <option>Select Driver</option>
+                                    <option>John Tan</option>
+                                    <option>Ahmad Faiz</option>
+                                </select>
+                            </div>
+
+                            <!-- Assigned Lorry -->
+                            <div>
+                                <label class="text-sm font-medium">Assigned Lorry</label>
+
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+                                    <option>Select Lorry</option>
+                                    <option>JQX 8821</option>
+                                    <option>VBL 1022</option>
+                                </select>
+                            </div>
+
+                            <!-- Priority -->
+                            <div>
+                                <label class="text-sm font-medium">Priority</label>
+
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                </select>
+                            </div>
+
+                            <!-- Description -->
+                            <div>
+                                <label class="text-sm font-medium">Description</label>
+
+                                <textarea rows="4"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1"></textarea>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="border-t p-6 flex justify-end gap-2">
+
+                        <button type="button"
+                                @click="open = false"
+                                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                            Cancel
+                        </button>
+
+                        <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            Save Ticket
+                        </button>
+
+                    </div>
 
                 </div>
             </div>
