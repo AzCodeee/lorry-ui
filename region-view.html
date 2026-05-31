@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Region View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-700">
+
+<div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
+
+    <!-- OVERLAY -->
+    <div x-show="sidebar"
+         class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+         @click="sidebar=false"></div>
+
+    <!-- SIDEBAR -->
+    <aside :class="sidebar ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed lg:translate-x-0 transition-transform duration-300 z-50
+                  w-64 h-screen bg-gray-100 border-r border-gray-200">
+
+        <!-- LOGO -->
+        <div class="p-4 border-b flex items-center justify-between">
+
+            <a href="index.html">
+                <img src="assets/images/logo.png"
+                     class="h-16"
+                     alt="Logo">
+            </a>
+
+            <button class="lg:hidden"
+                    @click="sidebar=false">
+                ✕
+            </button>
+
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
+
+            <a href="index.html"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                Dashboard
+            </a>
+
+            <a href="project.html"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                <i data-lucide="folder" class="w-5 h-5"></i>
+                Project
+            </a>
+
+            <a href="ticket.html"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                <i data-lucide="ticket" class="w-5 h-5"></i>
+                Ticket
+            </a>
+
+            <a href="maintenance.html"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                <i data-lucide="wrench" class="w-5 h-5"></i>
+                Maintenance
+            </a>
+
+            <!-- SETTINGS -->
+            <div x-data="{ open:true }">
+
+                <button @click="open=!open"
+                        class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow">
+
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    Settings
+
+                    <i data-lucide="chevron-down"
+                       class="w-4 h-4 ml-auto transition-transform"
+                       :class="{ 'rotate-180': open }">
+                    </i>
+
+                </button>
+
+                <div x-show="open" x-transition class="pl-8 space-y-1">
+
+                    <a href="driver.html"
+                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        Driver
+                    </a>
+
+                    <a href="region.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
+
+                        <i data-lucide="map" class="w-4 h-4"></i>
+                        Region
+
+                    </a>
+
+                    <a href="sites.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        Sites
+
+                    </a>
+
+                    <a href="lorry.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="truck" class="w-4 h-4"></i>
+                        Lorry
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+
+        <!-- HEADER -->
+        <header class="fixed top-0 right-0 left-0 lg:left-64
+                       h-16 bg-white border-b border-gray-200
+                       flex items-center justify-between px-4 lg:px-6 z-30">
+
+            <div class="flex items-center gap-3">
+
+                <button class="lg:hidden"
+                        @click="sidebar=true">
+
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+
+                </button>
+
+                <h1 class="text-sm lg:text-lg font-semibold uppercase">
+                    Fleet Management System
+                </h1>
+
+            </div>
+
+            <!-- PROFILE -->
+            <div class="flex items-center gap-3">
+
+                <img src="assets/images/avatar-2.jpg"
+                     class="w-10 h-10 rounded-full border">
+
+                <div class="text-sm">
+                    <div class="font-medium">Aaron Chia</div>
+                    <div class="text-gray-500 text-xs">
+                        aaron@gmail.com
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- CONTENT -->
+        <main class="pt-20 p-6" x-data="{ edit:false, menu:false }">
+
+            <!-- REGION CARD -->
+            <div class="bg-white rounded-xl shadow p-6">
+
+                <div class="flex justify-between">
+
+                    <div>
+                        <h2 class="text-xl font-semibold">Kuching Region</h2>
+                        <p class="text-sm text-gray-500">
+                            Kuching Division Operations
+                        </p>
+                    </div>
+
+                    <!-- MENU -->
+                    <div class="relative">
+
+                        <button @click="menu=!menu" class="p-2 hover:bg-gray-100 rounded-lg">
+                            <i data-lucide="more-vertical"></i>
+                        </button>
+
+                        <div x-show="menu"
+                             @click.away="menu=false"
+                             class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow">
+
+                            <button @click="edit=true;menu=false"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                Edit
+                            </button>
+
+                            <button class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- STATS -->
+                <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
+
+                    <div>
+                        <p class="text-gray-500">Region Code</p>
+                        <p class="font-semibold">KCH</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Total Sites</p>
+                        <p class="font-semibold">5 Sites</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Created Date</p>
+                        <p class="font-semibold">2026-05-30</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SITES UNDER REGION -->
+            <div class="mt-6 bg-white rounded-xl shadow">
+
+                <div class="p-4 border-b font-semibold">
+                    Sites in this Region
+                </div>
+
+                <table class="w-full text-sm">
+
+                    <thead class="bg-gray-50 text-left">
+                        <tr>
+                            <th class="p-3">Site Name</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="border-t hover:bg-gray-50">
+                            <td class="p-3 font-medium">HQ Office</td>
+                            <td>Kuching City</td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                    Loading Site
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="border-t hover:bg-gray-50">
+                            <td class="p-3 font-medium">Kuching Quarry</td>
+                            <td>Padawan</td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
+                                    Dumping Site
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- EDIT OFFCANVAS -->
+            <div x-show="edit"
+                 class="fixed inset-0 flex justify-end bg-black/40 z-50">
+
+                <div @click.away="edit=false"
+                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+
+                    <div class="flex justify-between p-6 border-b">
+                        <h2 class="font-semibold">Edit Region</h2>
+                        <button @click="edit=false">✕</button>
+                    </div>
+
+                    <div class="flex-1 p-6 space-y-4">
+
+                        <input class="w-full border rounded-lg px-3 py-2" value="Kuching Region">
+                        <input class="w-full border rounded-lg px-3 py-2" value="KCH">
+
+                        <textarea class="w-full border rounded-lg px-3 py-2 h-32">
+Kuching Division Operations
+                        </textarea>
+
+                    </div>
+
+                    <div class="p-6 border-t flex justify-end gap-2">
+
+                        <button class="px-4 py-2 border rounded-lg" @click="edit=false">
+                            Cancel
+                        </button>
+
+                        <button class="px-4 py-2 bg-green-600 text-white rounded-lg">
+                            Save
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+</body>
+</html>

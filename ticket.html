@@ -105,13 +105,20 @@
                         Driver
                     </a>
 
-                    <a href="sites.html"
+                    <a href="region.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="map" class="w-4 h-4"></i>
+                        Region
+
+                    </a>
+
+<a href="sites.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
                         Sites
                     </a>
-
                     <a href="lorry.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
@@ -218,13 +225,30 @@
             </div>
 
             <!-- TABLE -->
-            <div class="bg-white rounded-xl shadow">
+            <div class="bg-white rounded-xl shadow" 
+                x-data="ticketTable()">
 
-                <!-- SEARCH -->
-                <div class="p-4 border-b flex justify-end">
+                <!-- FILTER BY REGION -->
+                <div class="p-4 border-b flex justify-between items-center">
+
+                    <!-- REGION FILTER -->
+                    <select x-model="selectedRegion"
+                            class="border rounded-lg px-3 py-2 bg-white w-48">
+
+                        <option value="">All Regions</option>
+                        <option value="Kuching">Kuching</option>
+                        <option value="Lawas">Lawas</option>
+                        <option value="Miri">Miri</option>
+                        <option value="Bintulu">Bintulu</option>
+
+                    </select>
+                    
                     <input type="text"
-                           placeholder="Search tickets..."
-                           class="border rounded-lg px-3 py-2 w-64">
+                        placeholder="Search tickets..."
+                        class="border rounded-lg px-3 py-2 w-64">
+
+                    
+
                 </div>
                 <div class="overflow-x-auto">
                     <div class="overflow-x-auto">
@@ -245,167 +269,104 @@
 
                         <tbody>
 
-                            <!-- ROW 1 -->
-                            <tr class="border-t hover:bg-gray-50">
+                        <!-- ROW 1 -->
+                        <tr class="border-t hover:bg-gray-50"
+                            data-region="Kuching"
+                            x-show="matchRegion($el)">
 
-                                <td class="p-3 font-medium">
-                                    #TK-1001
-                                </td>
+                            <td class="p-3 font-medium">#TK-1001</td>
+                            <td>Project Alpha</td>
+                            <td>KL Quarry</td>
+                            <td>Cyberjaya Site A</td>
+                            <td>John Tan</td>
+                            <td>JQX 8821</td>
 
-                                <td>
-                                    Project Alpha
-                                </td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                    Pending
+                                </span>
+                            </td>
 
-                                <td>
-                                    KL Quarry
-                                </td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
+                                    High
+                                </span>
+                            </td>
 
-                                <td>
-                                    Cyberjaya Site A
-                                </td>
+                            <td class="text-right p-3">
+                                <a href="ticket-view.html"
+                                class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                            </td>
 
-                                <td>
-                                    John Tan
-                                </td>
+                        </tr>
 
-                                <td>
-                                    JQX 8821
-                                </td>
+                        <!-- ROW 2 -->
+                        <tr class="border-t hover:bg-gray-50"
+                            data-region="Miri"
+                            x-show="matchRegion($el)">
 
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
-                                        Pending
-                                    </span>
-                                </td>
+                            <td class="p-3 font-medium">#TK-1002</td>
+                            <td>Project Beta</td>
+                            <td>Shah Alam Warehouse</td>
+                            <td>Putrajaya Construction</td>
+                            <td>Ahmad Faiz</td>
+                            <td>VBL 1022</td>
 
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
-                                        High
-                                    </span>
-                                </td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                    Ongoing
+                                </span>
+                            </td>
 
-                                <td class="text-right p-3">
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                    Medium
+                                </span>
+                            </td>
 
-                                    <a href="ticket-view.html"
-                                    class="inline-flex items-center justify-center
-                                            w-9 h-9 rounded-lg
-                                            bg-gray-100 hover:bg-white hover:shadow">
+                            <td class="text-right p-3">
+                                <a href="ticket-view.html"
+                                class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                            </td>
 
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        </tr>
 
-                                    </a>
+                        <!-- ROW 3 -->
+                        <tr class="border-t hover:bg-gray-50"
+                            data-region="Bintulu"
+                            x-show="matchRegion($el)">
 
-                                </td>
+                            <td class="p-3 font-medium">#TK-1003</td>
+                            <td>Project Gamma</td>
+                            <td>Johor Plant</td>
+                            <td>Bangi Disposal Area</td>
+                            <td>Kelvin Wong</td>
+                            <td>WXY 3321</td>
 
-                            </tr>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
+                                    Completed
+                                </span>
+                            </td>
 
-                            <!-- ROW 2 -->
-                            <tr class="border-t hover:bg-gray-50">
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700">
+                                    Low
+                                </span>
+                            </td>
 
-                                <td class="p-3 font-medium">
-                                    #TK-1002
-                                </td>
+                            <td class="text-right p-3">
+                                <a href="ticket-view.html"
+                                class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                            </td>
 
-                                <td>
-                                    Project Beta
-                                </td>
-
-                                <td>
-                                    Shah Alam Warehouse
-                                </td>
-
-                                <td>
-                                    Putrajaya Construction
-                                </td>
-
-                                <td>
-                                    Ahmad Faiz
-                                </td>
-
-                                <td>
-                                    VBL 1022
-                                </td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                                        Ongoing
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
-                                        Medium
-                                    </span>
-                                </td>
-
-                                <td class="text-right p-3">
-
-                                    <a href="ticket-view.html"
-                                    class="inline-flex items-center justify-center
-                                            w-9 h-9 rounded-lg
-                                            bg-gray-100 hover:bg-white hover:shadow">
-
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-                            <!-- ROW 3 -->
-                            <tr class="border-t hover:bg-gray-50">
-
-                                <td class="p-3 font-medium">
-                                    #TK-1003
-                                </td>
-
-                                <td>
-                                    Project Gamma
-                                </td>
-
-                                <td>
-                                    Johor Plant
-                                </td>
-
-                                <td>
-                                    Bangi Disposal Area
-                                </td>
-
-                                <td>
-                                    Kelvin Wong
-                                </td>
-
-                                <td>
-                                    WXY 3321
-                                </td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
-                                        Completed
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700">
-                                        Low
-                                    </span>
-                                </td>
-
-                                <td class="text-right p-3">
-
-                                    <a href="ticket-view.html"
-                                    class="inline-flex items-center justify-center
-                                            w-9 h-9 rounded-lg
-                                            bg-gray-100 hover:bg-white hover:shadow">
-
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
+                        </tr>
 
                         </tbody>
 
@@ -416,8 +377,8 @@
 
             <!-- OFFCANVAS -->
             <div x-show="open"
-                 x-transition
-                 class="fixed inset-0 flex justify-end bg-black/40">
+                x-transition
+                class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
                 <div @click.away="open = false"
                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
@@ -449,28 +410,95 @@
                                     class="w-full border rounded-lg px-3 py-2 mt-1">
                             </div>
 
-                            <!-- Loading Site -->
-                            <div>
-                                <label class="text-sm font-medium">Loading Site</label>
+                            <!-- Region -->
+                            <div x-data="ticketForm()">
+                                <!-- FAKE LOADING OVERLAY -->
+                                <div x-show="isLoading"
+                                    x-transition
+                                    class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
 
-                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
-                                    <option>Select Loading Site</option>
-                                    <option>KL Quarry</option>
-                                    <option>Shah Alam Warehouse</option>
-                                    <option>Johor Plant</option>
+                                    <div class="bg-white w-80 sm:w-96 rounded-2xl shadow-xl p-8 text-center">
+
+                                        <!-- Spinner -->
+                                        <div class="flex justify-center mb-4">
+                                            <svg class="animate-spin h-12 w-12 text-green-600"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24">
+                                                <circle class="opacity-25"
+                                                        cx="12" cy="12" r="10"
+                                                        stroke="currentColor"
+                                                        stroke-width="4"></circle>
+                                                <path class="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8v8H4z"></path>
+                                            </svg>
+                                        </div>
+
+                                        <!-- Title -->
+                                        <h2 class="text-lg font-semibold text-gray-800">
+                                            Fetching Region Data
+                                        </h2>
+
+                                        <!-- Subtitle -->
+                                        <p class="text-sm text-gray-500 mt-2">
+                                            Loading loading & dumping sites from server...
+                                        </p>
+
+                                        <!-- Fake progress bar -->
+                                        <div class="mt-6 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                                            <div class="h-2 bg-green-500 animate-pulse w-full"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <label class="text-sm font-medium">Region</label>
+
+                                <select x-model="region"
+                                    @change="updateSites"
+                                    class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+
+                                    <option value="">Select Region</option>
+                                    <option value="Kuching">Kuching</option>
+                                    <option value="Lawas">Lawas</option>
+                                    <option value="Miri">Miri</option>
+                                    <option value="Bintulu">Bintulu</option>
+
                                 </select>
-                            </div>
 
-                            <!-- Dumping Site -->
-                            <div>
-                                <label class="text-sm font-medium">Dumping Site</label>
+                                <!-- Loading Site -->
+                                <div class="mt-3">
+                                    <label class="text-sm font-medium">Loading Site</label>
 
-                                <select class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
-                                    <option>Select Dumping Site</option>
-                                    <option>Cyberjaya Construction Site</option>
-                                    <option>Putrajaya Site A</option>
-                                    <option>Bangi Disposal Area</option>
-                                </select>
+                                    <select x-model="loadingSite"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+
+                                        <option value="">Select Loading Site</option>
+
+                                        <template x-for="site in loadingSites" :key="site">
+                                            <option x-text="site"></option>
+                                        </template>
+
+                                    </select>
+                                </div>
+
+                                <!-- Dumping Site -->
+                                <div class="mt-3">
+                                    <label class="text-sm font-medium">Dumping Site</label>
+
+                                    <select x-model="dumpingSite"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 bg-white">
+
+                                        <option value="">Select Dumping Site</option>
+
+                                        <template x-for="site in dumpingSites" :key="site">
+                                            <option x-text="site"></option>
+                                        </template>
+
+                                    </select>
+                                </div>
+
                             </div>
 
                             <!-- Assigned Driver -->
@@ -548,14 +576,71 @@
 
 <!-- SCRIPT -->
 <script>
-function groupPage() {
+function ticketForm() {
     return {
-        open: false
+        region: '',
+        loadingSite: '',
+        dumpingSite: '',
+
+        loadingSites: [],
+        dumpingSites: [],
+
+        isLoading: false,
+
+        siteData: {
+            Kuching: {
+                loading: ["Kuching Quarry", "Kuching Port", "Kuching Industrial Park"],
+                dumping: ["Samarahan Dump Site", "Kuching Landfill"]
+            },
+            Lawas: {
+                loading: ["Lawas Quarry", "Trusan Site"],
+                dumping: ["Lawas Dump Zone A", "Lawas Disposal Yard"]
+            },
+            Miri: {
+                loading: ["Miri Quarry", "Bekenu Site"],
+                dumping: ["Miri Landfill", "Lambir Dump Area"]
+            },
+            Bintulu: {
+                loading: ["Bintulu Industrial Area", "Samalaju Site"],
+                dumping: ["Bintulu Dump Site A", "Kidurong Disposal"]
+            }
+        },
+
+        updateSites() {
+            if (!this.region) return;
+
+            // show fake loading
+            this.isLoading = true;
+
+            // reset current selections
+            this.loadingSites = [];
+            this.dumpingSites = [];
+            this.loadingSite = '';
+            this.dumpingSite = '';
+
+            // simulate API delay
+            setTimeout(() => {
+                this.loadingSites = this.siteData[this.region].loading;
+                this.dumpingSites = this.siteData[this.region].dumping;
+
+                this.isLoading = false;
+            }, 1200); // fake API delay
+        }
+    }
+}
+
+function ticketTable() {
+    return {
+        selectedRegion: '',
+
+        matchRegion(el) {
+            if (!this.selectedRegion) return true;
+            return el.dataset.region === this.selectedRegion;
+        }
     }
 }
 
 lucide.createIcons();
 </script>
-
 </body>
 </html>

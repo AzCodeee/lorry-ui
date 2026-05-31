@@ -104,13 +104,21 @@
                         Driver
                     </a>
 
+                    <a href="region.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="map" class="w-4 h-4"></i>
+                        Region
+
+                    </a>
+
                     <a href="sites.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
                         Sites
                     </a>
-
+                    
                     <a href="lorry.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
@@ -318,8 +326,8 @@
 
             <!-- OFFCANVAS -->
             <div x-show="open"
-                 x-transition
-                 class="fixed inset-0 flex justify-end bg-black/40">
+                x-transition
+                class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
                 <div @click.away="open = false"
                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">

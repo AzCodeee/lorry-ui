@@ -104,13 +104,20 @@
                         Driver
                     </a>
 
-                    <a href="sites.html"
+                    <a href="region.html"
+                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+
+                        <i data-lucide="map" class="w-4 h-4"></i>
+                        Region
+
+                    </a>
+
+<a href="sites.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
 
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
                         Sites
                     </a>
-
                     <a href="lorry.html"
                     class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
 
@@ -317,59 +324,61 @@
 
             <!-- OFFCANVAS -->
             <div x-show="open"
-                 x-transition
-                 class="fixed inset-0 flex justify-end bg-black/40">
+                x-transition
+                class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
                 <div @click.away="open = false"
-                     class="w-full max-w-md bg-white h-full shadow-xl p-6">
+                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
 
-                    <div class="flex justify-between items-center mb-4">
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-center p-6 border-b">
                         <h2 class="text-lg font-semibold">Add Lorry</h2>
                         <button @click="open = false">✕</button>
                     </div>
+                    <div class="flex-1 overflow-y-auto p-6">
+                        <form class="space-y-4">
 
-                    <form class="space-y-4">
+                            <div>
+                                <label class="text-sm font-medium">Car Plate</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Car Plate</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">VIN Number</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">VIN Number</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Road Tax Status</label>
+                                <select class="w-full border rounded-lg px-3 py-2 mt-1">
+                                    <option>Valid</option>
+                                    <option>Expired</option>
+                                </select>
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Road Tax Status</label>
-                            <select class="w-full border rounded-lg px-3 py-2 mt-1">
-                                <option>Valid</option>
-                                <option>Expired</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Bucket Size</label>
+                                <input class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Bucket Size</label>
-                            <input class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div>
+                                <label class="text-sm font-medium">Utilization %</label>
+                                <input type="number" class="w-full border rounded-lg px-3 py-2 mt-1">
+                            </div>
 
-                        <div>
-                            <label class="text-sm font-medium">Utilization %</label>
-                            <input type="number" class="w-full border rounded-lg px-3 py-2 mt-1">
-                        </div>
+                            <div class="flex justify-end gap-2 pt-4 border-t">
+                                <button type="button" @click="open = false" class="px-4 py-2 border rounded-lg">
+                                    Cancel
+                                </button>
 
-                        <div class="flex justify-end gap-2 pt-4 border-t">
-                            <button type="button" @click="open = false" class="px-4 py-2 border rounded-lg">
-                                Cancel
-                            </button>
+                                <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                    Save
+                                </button>
+                            </div>
 
-                            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                Save
-                            </button>
-                        </div>
-
-                    </form>
-
+                        </form>
+                    </div>
+                    
                 </div>
             </div>
 
