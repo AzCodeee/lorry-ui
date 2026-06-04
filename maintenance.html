@@ -205,8 +205,57 @@
         </header>
 
         <!-- CONTENT -->
-        <main class="pt-20 p-6" x-data="{ open: false }">
+        <main class="pt-20 p-6" x-data="lorryDashboard()">
 
+             <!-- LORRY SUMMARY CARDS -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+                <!-- ACTIVE -->
+                <div @click="openModal('Active')"
+                    class="cursor-pointer rounded-xl p-4 text-white shadow-lg bg-green-500 hover:scale-[1.02] transition">
+
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm opacity-90">Active Lorry</p>
+                            <p class="text-2xl font-bold">12</p>
+                        </div>
+
+                        <i data-lucide="truck" class="w-10 h-10 opacity-80"></i>
+                    </div>
+
+                </div>
+
+                <!-- IN REPAIR -->
+                <div @click="openModal('Repair')"
+                    class="cursor-pointer rounded-xl p-4 text-white shadow-lg bg-yellow-500 hover:scale-[1.02] transition">
+
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm opacity-90">In Repair</p>
+                            <p class="text-2xl font-bold">4</p>
+                        </div>
+
+                        <i data-lucide="wrench" class="w-10 h-10 opacity-80"></i>
+                    </div>
+
+                </div>
+
+                <!-- IDLE -->
+                <div @click="openModal('Idle')"
+                    class="cursor-pointer rounded-xl p-4 text-white shadow-lg bg-gray-600 hover:scale-[1.02] transition">
+
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm opacity-90">Idle Lorry</p>
+                            <p class="text-2xl font-bold">7</p>
+                        </div>
+
+                        <i data-lucide="pause-circle" class="w-10 h-10 opacity-80"></i>
+                    </div>
+
+                </div>
+
+            </div>
             <!-- TITLE -->
             <div class="flex justify-between items-center mb-4">
 
@@ -224,6 +273,7 @@
 
             <!-- TABLE -->
             <div class="bg-white rounded-xl shadow">
+                
 
                 <div class="p-4 border-b flex justify-end">
                     <input type="text"
@@ -275,7 +325,7 @@
                             <td>2026-05-18</td>
                             <td>
                                 <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                                    Fixed
+                                    Idle
                                 </span>
                             </td>
                             <td class="text-right p-3">
@@ -413,14 +463,84 @@
             <footer class="mt-10 text-xs text-gray-500 border-t pt-4">
                 Copyright © 2026 AZCode
             </footer>
+            <!-- STATUS MODAL -->
+            <div x-show="statusModal"
+                x-transition
+                class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
 
+                <div @click.away="statusModal=false"
+                    class="bg-white w-full max-w-2xl rounded-xl shadow-lg p-6">
+
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold" x-text="modalTitle"></h2>
+                        <button @click="statusModal=false" class="text-xl">✕</button>
+                    </div>
+
+                    <!-- LIST -->
+                    <div class="space-y-3">
+
+                        <template x-for="l in filteredLorries" :key="l.plate">
+
+                            <div class="flex justify-between items-center border rounded-lg p-3">
+
+                                <div>
+                                    <p class="font-semibold" x-text="l.plate"></p>
+                                    <p class="text-sm text-gray-500" x-text="l.issue"></p>
+                                </div>
+
+                                <span class="px-2 py-1 text-xs rounded"
+                                    :class="statusColor(l.status)"
+                                    x-text="l.status">
+                                </span>
+
+                            </div>
+
+                        </template>
+
+                    </div>
+
+                </div>
+            </div>
         </main>
 
     </div>
+
 </div>
 
 <script>
     lucide.createIcons();
+
+function lorryDashboard() {
+    return {
+        statusModal: false,
+        modalTitle: '',
+        filteredLorries: [],
+        open: false,
+
+        lorries: [
+            { plate: 'JQX 8821', status: 'Active', issue: 'Engine OK' },
+            { plate: 'VBL 1022', status: 'Repair', issue: 'Brake issue' },
+            { plate: 'ABC 9988', status: 'Idle', issue: 'Not assigned' },
+            { plate: 'DEF 7712', status: 'Active', issue: 'On delivery' },
+        ],
+
+        openModal(status) {
+            this.modalTitle = status + " Lorries"
+
+            this.filteredLorries = this.lorries.filter(l =>
+                l.status === status
+            )
+
+            this.statusModal = true
+        },
+
+        statusColor(status) {
+            if (status === 'Active') return 'bg-green-100 text-green-700'
+            if (status === 'Repair') return 'bg-yellow-100 text-yellow-700'
+            if (status === 'Idle') return 'bg-gray-200 text-gray-700'
+        }
+    }
+}
 </script>
 </body>
 </html>

@@ -226,7 +226,7 @@
 
             <!-- TABLE -->
             <div class="bg-white rounded-xl shadow" 
-                x-data="ticketTable()">
+                x-data="ticketTable()" x-init="init()">
 
                 <!-- FILTER BY REGION -->
                 <div class="p-4 border-b flex justify-between items-center">
@@ -576,6 +576,8 @@
 
 <!-- SCRIPT -->
 <script>
+lucide.createIcons();
+
 function ticketForm() {
     return {
         region: '',
@@ -632,6 +634,11 @@ function ticketForm() {
 function ticketTable() {
     return {
         selectedRegion: '',
+        init() {
+            this.$nextTick(() => {
+                lucide.createIcons();
+            });
+        },
 
         matchRegion(el) {
             if (!this.selectedRegion) return true;
@@ -640,7 +647,6 @@ function ticketTable() {
     }
 }
 
-lucide.createIcons();
 </script>
 </body>
 </html>

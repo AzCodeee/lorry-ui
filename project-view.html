@@ -204,135 +204,225 @@
 
         <main class="pt-20 p-6" x-data="{ open:false }">
 
-        <!-- ================= PROJECT INFO CARD ================= -->
-        <div class="bg-white rounded-xl shadow p-6 mb-6" x-data="{ menu:false, edit:false }">
+            <!-- ================= PROJECT INFO CARD ================= -->
+            <div class="bg-white rounded-xl shadow p-6 mb-6" x-data="projectPage()">
 
-            <!-- TOP ROW -->
-            <div class="flex justify-between items-start relative">
+                <!-- TOP ROW -->
+                <div class="flex justify-between items-start relative">
 
-                <div>
-                    <h2 class="text-xl font-semibold">Project Alpha</h2>
-                    <p class="text-sm text-gray-500">HQ Kuala Lumpur</p>
+                    <div>
+                        <h2 class="text-xl font-semibold">Project Alpha</h2>
+                        <p class="text-sm text-gray-500">HQ Kuala Lumpur</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+
+                        <!-- STATUS -->
+                        <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
+                            In Progress
+                        </span>
+
+                        <!-- 3 DOT MENU -->
+                        <div class="relative">
+
+                            <button @click="menu = !menu"
+                                    class="p-2 rounded-lg hover:bg-gray-100">
+                                <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                            </button>
+
+                            <!-- DROPDOWN -->
+                            <div x-show="menu"
+                                @click.away="menu=false"
+                                x-transition
+                                class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-50">
+
+                                <!-- EDIT -->
+                                <button @click="edit = true; menu = false"
+                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2">
+                                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                    Edit
+                                </button>
+
+                                <!-- DELETE -->
+                                <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    Delete
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <!-- INFO GRID -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6 text-sm">
+                    <div>
+                        <p class="text-gray-500">Region</p>
+                        <p class="font-semibold">Kuching</p>
+                    </div>
 
-                    <!-- STATUS -->
-                    <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
-                        In Progress
-                    </span>
+                    <div>
+                        <p class="text-gray-500">Sites</p>
+                        <p class="font-semibold">Kuching Quarry</p>
+                    </div>
 
-                    <!-- 3 DOT MENU -->
-                    <div class="relative">
+                    <div>
+                        <p class="text-gray-500">Total Tickets</p>
+                        <p class="font-semibold">12</p>
+                    </div>
 
-                        <button @click="menu = !menu"
-                                class="p-2 rounded-lg hover:bg-gray-100">
-                            <i data-lucide="more-vertical" class="w-5 h-5"></i>
-                        </button>
+                    <div>
+                        <p class="text-gray-500">Created Date</p>
+                        <p class="font-semibold">2026-05-20</p>
+                    </div>
 
-                        <!-- DROPDOWN -->
-                        <div x-show="menu"
-                            @click.away="menu=false"
-                            x-transition
-                            class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-50">
-
-                            <!-- EDIT -->
-                            <button @click="edit = true; menu = false"
-                                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2">
-                                <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                Edit
-                            </button>
-
-                            <!-- DELETE -->
-                            <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                Delete
-                            </button>
-
-                        </div>
+                    <div class="lg:col-span-3">
+                        <p class="text-gray-500">Description</p>
+                        <p class="font-semibold">
+                            Road construction project monitoring
+                        </p>
                     </div>
 
                 </div>
-            </div>
 
-            <!-- INFO GRID -->
-            <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
+                <!-- ================= EDIT OFFCANVAS ================= -->
+                <div x-show="edit"
+                    class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
-                <div>
-                    <p class="text-gray-500">Total Tickets</p>
-                    <p class="font-semibold">1</p>
-                </div>
+                    <div @click.away="edit=false"
+                        class="w-full max-w-md bg-white h-full shadow-xl p-6 overflow-y-auto">
 
-                <div>
-                    <p class="text-gray-500">Created Date</p>
-                    <p class="font-semibold">2026-05-20</p>
-                </div>
+                        <!-- HEADER -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-lg font-semibold">Edit Project</h2>
+                            <button @click="edit=false" class="text-xl">✕</button>
+                        </div>
 
-                <div>
-                    <p class="text-gray-500">Description</p>
-                    <p class="font-semibold">Road construction project monitoring</p>
-                </div>
+                        <!-- FORM -->
+                        <form class="space-y-4">
 
-            </div>
+                            <div>
+                                <label class="text-sm font-medium">Project Name</label>
+                                <input type="text"
+                                    x-model="form.project"
+                                    class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">
+                            </div>
 
-            <!-- ================= EDIT OFFCANVAS ================= -->
-            <div x-show="edit"
-                class="fixed inset-0 flex justify-end bg-black/40 z-50">
+                            <div x-data="regionSiteSelect()" x-init="init()">
+                                    <div x-show="isLoading"
+                                        x-transition
+                                        class="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
 
-                <div @click.away="edit=false"
-                    class="w-full max-w-md bg-white h-full shadow-xl p-6 overflow-y-auto">
+                                        <div class="bg-white w-80 sm:w-96 rounded-2xl shadow-xl p-8 text-center">
 
-                    <!-- HEADER -->
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-semibold">Edit Project</h2>
-                        <button @click="edit=false" class="text-xl">✕</button>
+                                            <!-- Spinner -->
+                                            <div class="flex justify-center mb-4">
+                                                <svg class="animate-spin h-12 w-12 text-green-600"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24">
+
+                                                    <circle class="opacity-25"
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="10"
+                                                            stroke="currentColor"
+                                                            stroke-width="4">
+                                                    </circle>
+
+                                                    <path class="opacity-75"
+                                                        fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8v8H4z">
+                                                    </path>
+
+                                                </svg>
+                                            </div>
+
+                                            <h2 class="text-lg font-semibold text-gray-800">
+                                                Fetching Region Data
+                                            </h2>
+
+                                            <p class="text-sm text-gray-500 mt-2">
+                                                Loading sites from server...
+                                            </p>
+
+                                            <div class="mt-6 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                                                <div class="h-2 bg-green-500 animate-pulse w-full"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Region -->
+                                    <div class="mb-4">
+
+                                        <label class="text-sm font-medium">Region</label>
+
+                                        <select
+                                            x-model="selectedRegion"
+                                            @change="loadRegionSites()"
+                                            class="w-full border rounded-lg px-3 py-2 mt-1">
+                                            
+                                            <option value="">Select Region</option>
+                                            <option value="Kuching">Kuching</option>
+                                            <option value="Lawas">Lawas</option>
+                                            <option value="Miri">Miri</option>
+                                            <option value="Bintulu">Bintulu</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Site -->
+                                    <div>
+
+                                        <label class="text-sm font-medium">Site</label>
+
+                                        <select
+                                            x-model="selectedSite"
+                                            class="w-full border rounded-lg px-3 py-2 mt-1"
+                                            value="Kuching Quarry">
+
+                                            <option value="">Select Site</option>
+
+                                            <option>Kuching Quarry</option>
+                                            <option>Batu Kawa Site</option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            <div>
+                                <label class="text-sm font-medium">Description</label>
+                                <textarea rows="3"
+                                    x-model="form.description"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">Road construction project monitoring</textarea>
+                            </div>
+
+                            <!-- BUTTONS -->
+                            <div class="flex justify-end gap-2 pt-4 border-t">
+
+                                <button type="button"
+                                        @click="edit=false"
+                                        class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                                    Cancel
+                                </button>
+
+                                <button type="submit"
+                                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                    Save Changes
+                                </button>
+
+                            </div>
+
+                        </form>
+
                     </div>
-
-                    <!-- FORM -->
-                    <form class="space-y-4">
-
-                        <div>
-                            <label class="text-sm font-medium">Project Name</label>
-                            <input type="text"
-                                value="Project Alpha"
-                                class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">
-                        </div>
-
-                        <div>
-                            <label class="text-sm font-medium">Site</label>
-                            <input type="text"
-                                value="HQ Kuala Lumpur"
-                                class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">
-                        </div>
-
-                        <div>
-                            <label class="text-sm font-medium">Description</label>
-                            <textarea rows="3"
-                                    class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-green-500">Road construction project monitoring</textarea>
-                        </div>
-
-                        <!-- BUTTONS -->
-                        <div class="flex justify-end gap-2 pt-4 border-t">
-
-                            <button type="button"
-                                    @click="edit=false"
-                                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                                Cancel
-                            </button>
-
-                            <button type="submit"
-                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                Save Changes
-                            </button>
-
-                        </div>
-
-                    </form>
-
                 </div>
-            </div>
 
-        </div>
+            </div>
 
             <!-- ================= TICKETS CARD ================= -->
             <div class="bg-white rounded-xl shadow">
@@ -358,7 +448,6 @@
                     <thead class="bg-gray-50 text-left">
                         <tr>
                             <th class="p-3">Ticket ID</th>
-                            <th>Project</th>
                             <th>Loading Site</th>
                             <th>Dumping Site</th>
                             <th>Driver</th>
@@ -376,10 +465,6 @@
 
                             <td class="p-3 font-medium">
                                 #TK-1001
-                            </td>
-
-                            <td>
-                                Project Alpha
                             </td>
 
                             <td>
@@ -563,6 +648,66 @@ function ticketSelect() {
 
         remove(id) {
             this.selected = this.selected.filter(i => i !== id);
+        }
+    }
+}
+
+function projectPage() {
+    return {
+        edit: false,
+        menu: false,
+
+        form: {
+            region: "Kuching",
+            site: "KL Quarry",
+            project: 'Project Alpha',
+            description: 'Road construction project monitoring',
+        },
+    }
+} 
+function regionSiteSelect() {
+    console.log('Initializing regionSiteSelect()');
+    return {
+        isLoading: false,
+
+        selectedRegion: 'Kuching',
+        selectedSite: 'Kuching Quarry',
+
+        regions: ['Kuching','Miri','Lawas','Bintulu'],
+        sites: [],
+
+        allSites: [
+            { id: 1, region: 'Kuching', name: 'Kuching Quarry' },
+            { id: 2, region: 'Kuching', name: 'Batu Kawa Site' },
+            { id: 3, region: 'Miri', name: 'Miri Port' },
+            { id: 4, region: 'Lawas', name: 'Lawas Main Site' },
+            { id: 5, region: 'Bintulu', name: 'Bintulu Terminal' }
+        ],
+
+        init() {
+            this.loadRegionSites(true)
+        },
+        
+        loadRegionSites(skipLoading = false) {
+            console.log('Loading region sites for:', this.selectedRegion);
+            if (!skipLoading) this.isLoading = true
+
+            this.sites = []
+
+            setTimeout(() => {
+
+                this.sites = this.allSites.filter(
+                    s => s.region === this.selectedRegion
+                )
+
+                // auto reselect site if exists
+                if (!this.sites.find(s => s.name === this.selectedSite)) {
+                    this.selectedSite = ''
+                }
+
+                this.isLoading = false
+
+            }, skipLoading ? 0 : 800)
         }
     }
 }
