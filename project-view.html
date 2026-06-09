@@ -165,8 +165,8 @@
                         class="w-10 h-10 rounded-full border" />
 
                     <div class="text-sm text-left">
-                        <div class="font-medium">Aaron Chia</div>
-                        <div class="text-gray-500 text-xs">aaron@gmail.com</div>
+                        <div class="font-medium">Chris Martin</div>
+                        <div class="text-gray-500 text-xs">martin@gmail.com</div>
                     </div>
 
                 </button>
@@ -425,96 +425,121 @@
             </div>
 
             <!-- ================= TICKETS CARD ================= -->
-            <div class="bg-white rounded-xl shadow">
-
+            <div x-data="ticketManager()" x-init="initLucide(); $watch('viewMode', () => $nextTick(() => initLucide()))" class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
                 <!-- HEADER -->
-                <div class="p-4 border-b flex justify-between items-center">
-
+                <div class="p-4 border-b border-gray-200 flex flex-wrap justify-between items-center gap-3">
                     <div>
-                        <h3 class="font-semibold">Tickets</h3>
-                        <p class="text-sm text-gray-500">All tickets under this project</p>
+                    <h3 class="text-lg font-semibold text-gray-800">Tickets & Lorry Trips</h3>
+                    <p class="text-sm text-gray-500">Track haulage tickets · group by lorry with completed trip counts</p>
                     </div>
-
-                    <button @click="open=true"
-                            class="bg-green-600 text-white px-3 py-2 text-sm lg:px-4 lg:text-base rounded-lg hover:bg-green-700">
-                        + Add Ticket
+                    <div class="flex items-center gap-2 flex-wrap">
+                    <button @click="viewMode = 'ticket'" 
+                            :class="{'bg-gray-800 text-white border-gray-800 shadow-sm': viewMode === 'ticket', 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': viewMode !== 'ticket'}"
+                            class="px-3 py-2 text-sm rounded-lg border font-medium transition-all duration-150">
+                        📋 View Tickets
                     </button>
-
+                    <button @click="viewMode = 'lorry'" 
+                            :class="{'bg-gray-800 text-white border-gray-800 shadow-sm': viewMode === 'lorry', 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': viewMode !== 'lorry'}"
+                            class="px-3 py-2 text-sm rounded-lg border font-medium transition-all duration-150">
+                        🚛 View by Lorry
+                    </button>
+                    <button @click="addSampleTicket()" 
+                            class="bg-green-600 text-white px-3 py-2 text-sm lg:px-4 lg:text-base rounded-lg hover:bg-green-700 shadow-sm transition flex items-center gap-1">
+                        <span>+</span> Add Ticket
+                    </button>
+                    </div>
                 </div>
 
-                <!-- TABLE -->
-                <div class="overflow-x-auto">
+                <!-- TICKET TABLE VIEW (unchanged, but data includes many completed) -->
+                <div x-show="viewMode === 'ticket'" x-transition.duration.150ms class="overflow-x-auto">
                     <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-left">
+                    <thead class="bg-gray-50 text-left border-b border-gray-200">
                         <tr>
-                            <th class="p-3">Ticket ID</th>
-                            <th>Loading Site</th>
-                            <th>Dumping Site</th>
-                            <th>Driver</th>
-                            <th>Lorry</th>
-                            <th>Status</th>
-                            <th>Priority</th>
-                            <th class="text-right p-3">Action</th>
+                        <th class="p-3 font-semibold text-gray-700">Ticket ID</th>
+                        <th class="p-3 font-semibold text-gray-700">Loading Site</th>
+                        <th class="p-3 font-semibold text-gray-700">Dumping Site</th>
+                        <th class="p-3 font-semibold text-gray-700">Driver</th>
+                        <th class="p-3 font-semibold text-gray-700">Lorry</th>
+                        <th class="p-3 font-semibold text-gray-700">Status</th>
+                        <th class="p-3 font-semibold text-gray-700">Priority</th>
+                        <th class="p-3 text-right font-semibold text-gray-700">Action</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
-                        <!-- ROW 1 -->
-                        <tr class="border-t hover:bg-gray-50">
-
-                            <td class="p-3 font-medium">
-                                #TK-1001
+                        <template x-for="ticket in tickets" :key="ticket.id">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-3 font-medium text-gray-900" x-text="ticket.id"></td>
+                            <td class="p-3 text-gray-700" x-text="ticket.loadingSite"></td>
+                            <td class="p-3 text-gray-700" x-text="ticket.dumpingSite"></td>
+                            <td class="p-3 text-gray-700" x-text="ticket.driver"></td>
+                            <td class="p-3 font-mono text-xs font-medium text-gray-700" x-text="ticket.lorry"></td>
+                            <td class="p-3">
+                            <span x-show="ticket.status === 'Pending'" class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                            <span x-show="ticket.status === 'Ongoing'" class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Ongoing</span>
+                            <span x-show="ticket.status === 'Completed'" class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Completed</span>
+                            <span x-show="ticket.status === 'Delayed'" class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Delayed</span>
                             </td>
-
-                            <td>
-                                KL Quarry
+                            <td class="p-3">
+                            <span x-show="ticket.priority === 'High'" class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">High</span>
+                            <span x-show="ticket.priority === 'Medium'" class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Medium</span>
+                            <span x-show="ticket.priority === 'Low'" class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">Low</span>
                             </td>
-
-                            <td>
-                                Cyberjaya Site A
-                            </td>
-
-                            <td>
-                                John Tan
-                            </td>
-
-                            <td>
-                                JQX 8821
-                            </td>
-
-                            <td>
-                                <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
-                                    Pending
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
-                                    High
-                                </span>
-                            </td>
-
                             <td class="text-right p-3">
-
-                                <a href="ticket-view.html"
-                                class="inline-flex items-center justify-center
-                                        w-9 h-9 rounded-lg
-                                        bg-gray-100 hover:bg-white hover:shadow">
-
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
-
+                                <a href="ticket-view.html" class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow-md transition border border-gray-200">
+                                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
                                 </a>
-
                             </td>
-
                         </tr>
-
+                        </template>
                     </tbody>
-
-                </table>
+                    </table>
+                    <div x-show="tickets.length === 0" class="text-center py-12 text-gray-400 italic text-sm">
+                    No tickets available. Click "Add Ticket" to create.
+                    </div>
                 </div>
 
+                <!-- LORRY GROUPED VIEW with new "Trips (Completed)" column -->
+                <div x-show="viewMode === 'lorry'" x-transition.duration.150ms class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                    <thead class="bg-gray-50 text-left border-b border-gray-200">
+                        <tr>
+                        <th class="p-3 font-semibold text-gray-700">Lorry Plate</th>
+                        <th class="p-3 font-semibold text-gray-700">Primary Driver</th>
+                        <th class="p-3 font-semibold text-gray-700">Total Tickets</th>
+                        <th class="p-3 font-semibold text-gray-700">Assigned Tickets (IDs)</th>
+                        <th class="p-3 text-right font-semibold text-gray-700">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="group in groupedLorries" :key="group.licensePlate">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition group">
+                            <td class="p-3 font-bold text-gray-800 font-mono text-sm" x-text="group.licensePlate"></td>
+                            <td class="p-3 text-gray-700" x-text="group.driverName"></td>
+                            <td class="p-3">
+                            <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium" x-text="group.ticketCount"></span>
+                            </td>
+                            <td class="p-3 max-w-md">
+                            <div class="ticket-id-list">
+                                <template x-for="tick in group.tickets" :key="tick.id">
+                                <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-md border border-gray-200 font-mono">
+                                    <span x-text="tick.id"></span>
+                                </span>
+                                </template>
+                            </div>
+                            </td>
+                             <td class="text-right p-3">
+                            <a href="lorry-view.html" class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow transition border border-gray-200">
+                                <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                            </td>
+                        </tr>
+                        </template>
+                    </tbody>
+                    </table>
+                    <div x-show="groupedLorries.length === 0" class="text-center py-12 text-gray-400 italic text-sm">
+                    No lorry data available. Add tickets to see grouping.
+                    </div>
+                </div>
             </div>
 
             <!-- ================= OFFCANVAS ADD TICKET ================= -->
@@ -711,6 +736,148 @@ function regionSiteSelect() {
         }
     }
 }
+function ticketManager() {
+    return {
+    viewMode: 'ticket',
+    // Extensive dummy data: multiple tickets per lorry, including many "Completed" statuses
+    tickets: [
+        { id: "#TK-1001", loadingSite: "KL Quarry", dumpingSite: "Cyberjaya Site A", driver: "John Tan", lorry: "JQX 8821", status: "Pending", priority: "High" },
+        { id: "#TK-1002", loadingSite: "Shah Alam Warehouse", dumpingSite: "Putrajaya Site B", driver: "Ahmad Faiz", lorry: "VBL 1022", status: "Ongoing", priority: "Medium" },
+        { id: "#TK-1003", loadingSite: "Johor Plant", dumpingSite: "Bangi Disposal Area", driver: "Kelvin Wong", lorry: "WXY 3321", status: "Completed", priority: "Low" },
+        { id: "#TK-1004", loadingSite: "Kuching Quarry", dumpingSite: "Samarahan Dump Site", driver: "Lim Wei", lorry: "ABC 9988", status: "Delayed", priority: "High" },
+        { id: "#TK-1005", loadingSite: "Miri Port", dumpingSite: "Lambir Dump Area", driver: "Suresh Kumar", lorry: "DEF 7712", status: "Pending", priority: "Medium" },
+        // Additional tickets to show multiple per lorry (JQX 8821 has 2 completed trips among these)
+        { id: "#TK-1006", loadingSite: "Sungai Buloh Quarry", dumpingSite: "Dengkil Landfill", driver: "John Tan", lorry: "JQX 8821", status: "Completed", priority: "High" },
+        { id: "#TK-1007", loadingSite: "Klang Warehouse", dumpingSite: "Sepang Site C", driver: "Ahmad Faiz", lorry: "VBL 1022", status: "Completed", priority: "Medium" },
+        { id: "#TK-1008", loadingSite: "Rawang Quarry", dumpingSite: "Puchong Disposal", driver: "John Tan", lorry: "JQX 8821", status: "Pending", priority: "High" },
+        { id: "#TK-1009", loadingSite: "Subang Jaya Depot", dumpingSite: "Nilai Dumping", driver: "Ahmad Faiz", lorry: "VBL 1022", status: "Ongoing", priority: "Low" },
+        { id: "#TK-1010", loadingSite: "Melaka Plant", dumpingSite: "Seremban Site", driver: "Kelvin Wong", lorry: "WXY 3321", status: "Completed", priority: "Medium" },
+        { id: "#TK-1011", loadingSite: "Bintulu Quarry", dumpingSite: "Miri Dump", driver: "Lim Wei", lorry: "ABC 9988", status: "Pending", priority: "High" },
+        { id: "#TK-1012", loadingSite: "Sibu Port", dumpingSite: "Kanowit Landfill", driver: "Suresh Kumar", lorry: "DEF 7712", status: "Completed", priority: "Low" },
+        { id: "#TK-1013", loadingSite: "Gombak Quarry", dumpingSite: "Klang Valley Central", driver: "John Tan", lorry: "JQX 8821", status: "Completed", priority: "Medium" },  // 2nd completed for JQX
+        { id: "#TK-1014", loadingSite: "Petaling Jaya Depot", dumpingSite: "PJ South Disposal", driver: "Ahmad Faiz", lorry: "VBL 1022", status: "Pending", priority: "High" },
+        { id: "#TK-1015", loadingSite: "Seri Kembangan Landfill", dumpingSite: "Puchong Gateway", driver: "Kelvin Wong", lorry: "WXY 3321", status: "Completed", priority: "Low" },   // 2nd completed for WXY
+        { id: "#TK-1016", loadingSite: "Kuantan Quarry", dumpingSite: "Gebeng Dump", driver: "Lim Wei", lorry: "ABC 9988", status: "Completed", priority: "Medium" },   // first completed for ABC
+        { id: "#TK-1017", loadingSite: "Ipoh Depot", dumpingSite: "Chemor Disposal", driver: "Suresh Kumar", lorry: "DEF 7712", status: "Ongoing", priority: "High" },
+        { id: "#TK-1018", loadingSite: "Penang Port", dumpingSite: "Seberang Jaya Landfill", driver: "John Tan", lorry: "JQX 8821", status: "Completed", priority: "Low" }    // 3rd completed for JQX
+    ],
+    
+    // Grouped lorry data with completed trips count
+    get groupedLorries() {
+        const groupsMap = new Map();
+        this.tickets.forEach(ticket => {
+        const plate = ticket.lorry;
+        if (!groupsMap.has(plate)) {
+            groupsMap.set(plate, {
+            licensePlate: plate,
+            driverName: ticket.driver,
+            tickets: [],
+            ticketCount: 0,
+            completedTrips: 0
+            });
+        }
+        const group = groupsMap.get(plate);
+        group.tickets.push(ticket);
+        group.ticketCount = group.tickets.length;
+        // Count completed tickets for this lorry
+        if (ticket.status === 'Completed') {
+            group.completedTrips += 1;
+        }
+        // handle driver name consistency (if multiple drivers for same lorry, combine)
+        if (group.driverName !== ticket.driver && !group.driverName.includes(ticket.driver)) {
+            group.driverName = `${group.driverName} / ${ticket.driver}`;
+        }
+        });
+        return Array.from(groupsMap.values()).sort((a,b) => a.licensePlate.localeCompare(b.licensePlate));
+    },
+    
+    // Add a new ticket (demonstrates real-time update of trip column)
+    addSampleTicket() {
+        const ids = this.tickets.map(t => {
+        const match = t.id.match(/\d+/);
+        return match ? parseInt(match[0], 10) : 0;
+        });
+        const maxId = Math.max(...ids, 1000);
+        const newIdNum = maxId + 1;
+        const newTicketId = `#TK-${newIdNum}`;
+        
+        // Choose lorry that already has some tickets: JQX 8821 (to further increase trip count if completed)
+        const targetLorry = (newIdNum % 3 === 0) ? "VBL 1022" : ((newIdNum % 2 === 0) ? "JQX 8821" : "WXY 3321");
+        let driverName = "";
+        let loadingSite = "";
+        let dumpingSite = "";
+        
+        if (targetLorry === "JQX 8821") {
+        driverName = "John Tan";
+        loadingSite = "Batu Caves Quarry";
+        dumpingSite = "Kepong Transfer Station";
+        } else if (targetLorry === "VBL 1022") {
+        driverName = "Ahmad Faiz";
+        loadingSite = "Port Klang Warehouse";
+        dumpingSite = "Elmina Disposal Hub";
+        } else {
+        driverName = "Kelvin Wong";
+        loadingSite = "Serendah Quarry";
+        dumpingSite = "Rawang Integrated Centre";
+        }
+        
+        // 40% chance to add as Completed to show trip increment
+        const statusOptions = ["Pending", "Ongoing", "Completed", "Delayed"];
+        let newStatus = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+        // make it slightly more likely to show completed trips (weighted)
+        if (Math.random() < 0.45) newStatus = "Completed";
+        
+        const priorities = ["High", "Medium", "Low"];
+        const newPriority = priorities[Math.floor(Math.random() * priorities.length)];
+        
+        const newTicket = {
+        id: newTicketId,
+        loadingSite: loadingSite,
+        dumpingSite: dumpingSite,
+        driver: driverName,
+        lorry: targetLorry,
+        status: newStatus,
+        priority: newPriority
+        };
+        
+        this.tickets = [...this.tickets, newTicket];
+        this.$nextTick(() => this.initLucide());
+        // Optional console log for demo
+        console.log(`➕ Added ${newTicket.id} | status: ${newStatus} → lorry ${targetLorry} trips updated if completed`);
+    },
+    
+    viewTicketDetails(ticketId) {
+        const ticket = this.tickets.find(t => t.id === ticketId);
+        if (ticket) {
+        alert(`🔍 TICKET DETAILS\n\nID: ${ticket.id}\nDriver: ${ticket.driver}\nLorry: ${ticket.lorry}\nSites: ${ticket.loadingSite} → ${ticket.dumpingSite}\nStatus: ${ticket.status} · Priority: ${ticket.priority}`);
+        } else {
+        alert("Ticket not found");
+        }
+    },
+    
+    viewLorryDetails(licensePlate) {
+        const group = this.groupedLorries.find(g => g.licensePlate === licensePlate);
+        if (group) {
+        const ticketsList = group.tickets.map(t => `${t.id} (${t.status})`).join(", ");
+        alert(`🚛 LORRY REPORT: ${licensePlate}\nDriver(s): ${group.driverName}\nTotal Tickets: ${group.ticketCount}\n✅ Completed Trips: ${group.completedTrips}\n\nAll tickets:\n${ticketsList}`);
+        } else {
+        alert("Lorry information unavailable.");
+        }
+    },
+    
+    initLucide() {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+        } else {
+        setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 50);
+        }
+    }
+    }
+}
+document.addEventListener('alpine:init', () => {});
+window.addEventListener('load', () => {
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+});
 </script>
 </body>
 </html>

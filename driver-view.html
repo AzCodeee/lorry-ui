@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Driver View</title>
+    <title>Driver View | Trips & Tickets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,7 @@
 
 <body class="bg-gray-100 text-gray-700">
 
-<div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
+<div x-data="driverPage()" x-init="initLucide()" class="min-h-screen bg-gray-100">
 
     <!-- MOBILE OVERLAY -->
     <div x-show="sidebar"
@@ -160,8 +160,7 @@
         </header>
 
         <!-- CONTENT -->
-        <main class="pt-20 p-6"
-              x-data="{ edit:false, menu:false }">
+        <main class="pt-20 p-6">
 
             <!-- ================= DRIVER CARD ================= -->
             <div class="bg-white rounded-xl shadow p-6">
@@ -224,7 +223,7 @@
 
                 </div>
 
-                <!-- DETAILS -->
+                <!-- DETAILS (updated equipment to match lorry) -->
                 <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
 
                     <div>
@@ -252,9 +251,9 @@
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Assigned Equipment</p>
-                        <p class="font-semibold">
-                            Truck WXY 1234
+                        <p class="text-gray-500">Assigned Lorry</p>
+                        <p class="font-semibold font-mono">
+                            JQX 8821
                         </p>
                     </div>
 
@@ -275,11 +274,95 @@
                     </p>
 
                     <p class="mt-1 text-sm">
-                        Experienced heavy vehicle driver assigned for long-distance transportation projects.
+                        Experienced heavy vehicle driver assigned for long-distance transportation projects. Currently operating lorry JQX 8821.
                     </p>
 
                 </div>
 
+            </div>
+
+            <!-- ================= NEW TRIP & TICKETS CARD ================= -->
+            <div class="mt-8 bg-white rounded-xl shadow overflow-hidden">
+                <!-- Header with Trip Count badge -->
+                <div class="p-5 border-b border-gray-200 flex flex-wrap justify-between items-center gap-3">
+                    <div>
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            Trips & Tickets
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Driver: John Tan</span>
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">Completed trips & ticket history</p>
+                    </div>
+                    <div class="bg-emerald-50 rounded-xl px-4 py-2 flex items-center gap-2 shadow-sm">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+                        <span class="text-sm font-medium text-gray-700">Total Trips (Completed):</span>
+                        <span class="text-2xl font-bold text-emerald-700" x-text="completedTicketsCount"></span>
+                    </div>
+                </div>
+
+                <!-- TABS (All / Completed / In Progress) -->
+                <div class="flex border-b border-gray-200 px-5 pt-2 gap-1">
+                    <button @click="activeTab = 'all'"
+                            :class="activeTab === 'all' ? 'border-blue-600 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-900'"
+                            class="px-4 py-2 text-sm font-medium border-b-2 transition rounded-t-lg">
+                        All Tickets
+                    </button>
+                    <button @click="activeTab = 'completed'"
+                            :class="activeTab === 'completed' ? 'border-blue-600 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-900'"
+                            class="px-4 py-2 text-sm font-medium border-b-2 transition rounded-t-lg">
+                        Completed (Trips)
+                    </button>
+                    <button @click="activeTab = 'inprogress'"
+                            :class="activeTab === 'inprogress' ? 'border-blue-600 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-900'"
+                            class="px-4 py-2 text-sm font-medium border-b-2 transition rounded-t-lg">
+                        In Progress
+                    </button>
+                </div>
+
+                <!-- TABLE (Dynamic based on activeTab) -->
+                <div class="overflow-x-auto p-0">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50 text-left border-b border-gray-200">
+                            <tr>
+                                <th class="p-3 font-semibold text-gray-700">Ticket ID</th>
+                                <th class="p-3 font-semibold text-gray-700">Loading Site</th>
+                                <th class="p-3 font-semibold text-gray-700">Dumping Site</th>
+                                <th class="p-3 font-semibold text-gray-700">Lorry</th>
+                                <th class="p-3 font-semibold text-gray-700">Status</th>
+                                <th class="p-3 font-semibold text-gray-700">Priority</th>
+                                <th class="p-3 text-right font-semibold text-gray-700">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="ticket in filteredTickets" :key="ticket.id">
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                    <td class="p-3 font-medium text-gray-900" x-text="ticket.id"></td>
+                                    <td class="p-3 text-gray-700" x-text="ticket.loadingSite"></td>
+                                    <td class="p-3 text-gray-700" x-text="ticket.dumpingSite"></td>
+                                    <td class="p-3 font-mono text-xs font-medium text-gray-700" x-text="ticket.lorry"></td>
+                                    <td class="p-3">
+                                        <span x-show="ticket.status === 'Pending'" class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                        <span x-show="ticket.status === 'Ongoing'" class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Ongoing</span>
+                                        <span x-show="ticket.status === 'Completed'" class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Completed</span>
+                                        <span x-show="ticket.status === 'Delayed'" class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Delayed</span>
+                                    </td>
+                                    <td class="p-3">
+                                        <span x-show="ticket.priority === 'High'" class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">High</span>
+                                        <span x-show="ticket.priority === 'Medium'" class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Medium</span>
+                                        <span x-show="ticket.priority === 'Low'" class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">Low</span>
+                                    </td>
+                                    <td class="text-right p-3">
+                                        <a href="#" @click.prevent="viewTicket(ticket.id)" class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow-md transition border border-gray-200">
+                                            <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div x-show="filteredTickets.length === 0" class="text-center py-12 text-gray-400 italic text-sm">
+                        No tickets found in this category.
+                    </div>
+                </div>
             </div>
 
             <!-- ================= EDIT OFFCANVAS ================= -->
@@ -350,9 +433,9 @@
                                        class="w-full border rounded-lg p-2">
                             </div>
 
-                            <!-- EQUIPMENT -->
+                            <!-- EQUIPMENT (lorry) -->
                             <div>
-                                <label class="text-sm font-medium">Assigned Equipment</label>
+                                <label class="text-sm font-medium">Assigned Lorry</label>
 
                                 <input x-model="form.equipment"
                                        class="w-full border rounded-lg p-2">
@@ -428,26 +511,80 @@
 </div>
 
 <script>
-lucide.createIcons();
-</script>
-
-<script>
-function editDriver() {
-    return {
-        form: {
-            name: "John Tan",
-            employeeId: "EMP-1001",
-            license: "DL-AX83921",
-            certification: "Heavy Vehicle Certification",
-            expiry: "2026-08-12",
-            equipment: "Truck WXY 1234",
-            phone: "+60 12-345 6789",
-            status: "Active",
-            notes: "Experienced heavy vehicle driver assigned for long-distance transportation projects."
+    // Main Alpine component for Driver Page + Tickets
+    function driverPage() {
+        return {
+            sidebar: false,
+            edit: false,
+            menu: false,
+            activeTab: 'all',   // 'all', 'completed', 'inprogress'
+            // Dummy tickets linked to driver John Tan (lorry JQX 8821)
+            tickets: [
+                { id: "#TK-1001", loadingSite: "KL Quarry", dumpingSite: "Cyberjaya Site A", lorry: "JQX 8821", status: "Pending", priority: "High" },
+                { id: "#TK-1006", loadingSite: "Sungai Buloh Quarry", dumpingSite: "Dengkil Landfill", lorry: "JQX 8821", status: "Completed", priority: "High" },
+                { id: "#TK-1008", loadingSite: "Rawang Quarry", dumpingSite: "Puchong Disposal", lorry: "JQX 8821", status: "Pending", priority: "High" },
+                { id: "#TK-1013", loadingSite: "Gombak Quarry", dumpingSite: "Klang Valley Central", lorry: "JQX 8821", status: "Completed", priority: "Medium" },
+                { id: "#TK-1018", loadingSite: "Penang Port", dumpingSite: "Seberang Jaya Landfill", lorry: "JQX 8821", status: "Completed", priority: "Low" },
+                { id: "#TK-1022", loadingSite: "Ipoh Depot", dumpingSite: "Chemor Disposal", lorry: "JQX 8821", status: "Ongoing", priority: "High" },
+                { id: "#TK-1025", loadingSite: "Shah Alam Warehouse", dumpingSite: "Putrajaya Site B", lorry: "JQX 8821", status: "Delayed", priority: "Medium" },
+                { id: "#TK-1030", loadingSite: "Kuantan Quarry", dumpingSite: "Gebeng Dump", lorry: "JQX 8821", status: "Completed", priority: "Low" }
+            ],
+            get completedTicketsCount() {
+                return this.tickets.filter(t => t.status === 'Completed').length;
+            },
+            get filteredTickets() {
+                if (this.activeTab === 'completed') {
+                    return this.tickets.filter(t => t.status === 'Completed');
+                } else if (this.activeTab === 'inprogress') {
+                    // In Progress = Pending, Ongoing, Delayed (non-completed)
+                    return this.tickets.filter(t => t.status !== 'Completed');
+                }
+                return this.tickets; // all tickets
+            },
+            viewTicket(ticketId) {
+                // Redirect to ticket-view.html with ID parameter
+                window.location.href = `ticket-view.html?id=${encodeURIComponent(ticketId)}`;
+            },
+            initLucide() {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                // re-run when tab changes or new elements appear
+                this.$watch('activeTab', () => {
+                    this.$nextTick(() => {
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
+                    });
+                });
+            }
         }
     }
-}
+
+    // Edit driver form (standalone)
+    function editDriver() {
+        return {
+            form: {
+                name: "John Tan",
+                employeeId: "EMP-1001",
+                license: "DL-AX83921",
+                certification: "Heavy Vehicle Certification",
+                expiry: "2026-08-12",
+                equipment: "JQX 8821",
+                phone: "+60 12-345 6789",
+                status: "Active",
+                notes: "Experienced heavy vehicle driver assigned for long-distance transportation projects. Currently operating lorry JQX 8821."
+            }
+        }
+    }
+
+    // Ensure lucide icons render after initial load and any dynamic changes
+    document.addEventListener('alpine:init', () => {
+        // No extra initialization needed; already called from driverPage initLucide
+    });
+    window.addEventListener('load', () => {
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
 </script>
 
 </body>
+
 </html>
