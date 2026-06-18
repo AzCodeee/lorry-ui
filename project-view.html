@@ -443,7 +443,7 @@
                             class="px-3 py-2 text-sm rounded-lg border font-medium transition-all duration-150">
                         📋 View Tickets
                     </button>
-                    <button @click="addSampleTicket()" 
+                    <button @click="open = true" 
                             class="bg-green-600 text-white px-3 py-2 text-sm lg:px-4 lg:text-base rounded-lg hover:bg-green-700 shadow-sm transition flex items-center gap-1">
                         <span>+</span> Add Ticket
                     </button>
@@ -789,61 +789,6 @@ function ticketManager() {
         }
         });
         return Array.from(groupsMap.values()).sort((a,b) => a.licensePlate.localeCompare(b.licensePlate));
-    },
-    
-    // Add a new ticket (demonstrates real-time update of trip column)
-    addSampleTicket() {
-        const ids = this.tickets.map(t => {
-        const match = t.id.match(/\d+/);
-        return match ? parseInt(match[0], 10) : 0;
-        });
-        const maxId = Math.max(...ids, 1000);
-        const newIdNum = maxId + 1;
-        const newTicketId = `#TK-${newIdNum}`;
-        
-        // Choose lorry that already has some tickets: JQX 8821 (to further increase trip count if completed)
-        const targetLorry = (newIdNum % 3 === 0) ? "VBL 1022" : ((newIdNum % 2 === 0) ? "JQX 8821" : "WXY 3321");
-        let driverName = "";
-        let loadingSite = "";
-        let dumpingSite = "";
-        
-        if (targetLorry === "JQX 8821") {
-        driverName = "John Tan";
-        loadingSite = "Batu Caves Quarry";
-        dumpingSite = "Kepong Transfer Station";
-        } else if (targetLorry === "VBL 1022") {
-        driverName = "Ahmad Faiz";
-        loadingSite = "Port Klang Warehouse";
-        dumpingSite = "Elmina Disposal Hub";
-        } else {
-        driverName = "Kelvin Wong";
-        loadingSite = "Serendah Quarry";
-        dumpingSite = "Rawang Integrated Centre";
-        }
-        
-        // 40% chance to add as Completed to show trip increment
-        const statusOptions = ["Pending", "Ongoing", "Completed", "Delayed"];
-        let newStatus = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-        // make it slightly more likely to show completed trips (weighted)
-        if (Math.random() < 0.45) newStatus = "Completed";
-        
-        const priorities = ["High", "Medium", "Low"];
-        const newPriority = priorities[Math.floor(Math.random() * priorities.length)];
-        
-        const newTicket = {
-        id: newTicketId,
-        loadingSite: loadingSite,
-        dumpingSite: dumpingSite,
-        driver: driverName,
-        lorry: targetLorry,
-        status: newStatus,
-        priority: newPriority
-        };
-        
-        this.tickets = [...this.tickets, newTicket];
-        this.$nextTick(() => this.initLucide());
-        // Optional console log for demo
-        console.log(`➕ Added ${newTicket.id} | status: ${newStatus} → lorry ${targetLorry} trips updated if completed`);
     },
     
     viewTicketDetails(ticketId) {

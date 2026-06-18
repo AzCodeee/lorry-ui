@@ -189,7 +189,7 @@
 
         <!-- ================= CONTENT ================= -->
         <main class="pt-20 p-6"
-              x-data="{ edit:false, menu:false }">
+            x-data="{ edit:false, menu:false, sparePart:false }">
 
             <!-- ================= LORRY CARD ================= -->
             <div class="bg-white rounded-xl shadow p-6">
@@ -394,7 +394,6 @@
                     </div>
 
                 </div>
-
             </div>
 
             <div class="bg-white rounded-xl shadow mt-6">
@@ -470,6 +469,146 @@
                     </tbody>
 
                 </table>
+                </div>
+
+            </div>
+
+            <div class="bg-white rounded-xl shadow mt-6">
+
+                <!-- HEADER -->
+                <div class="p-4 border-b flex justify-between items-center">
+
+                    <div>
+                        <h3 class="font-semibold">Spare Parts</h3>
+                    </div>
+
+                    <button
+                        @click="sparePart=true"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Add Spare Part
+
+                    </button>
+                </div>
+
+                <!-- TABLE -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50 text-left">
+                            <tr>
+                                <th class="p-3">Part Name</th>
+                                <th>Period</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="border-t">
+                                <td class="p-3">
+                                    Rubber Bush Spring (Belakang)
+                                </td>
+
+                                <td>
+                                    Every 12 Months
+                                </td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                        Good
+                                    </span>
+                                </td>
+
+                                <td>
+                                    No issue found
+                                </td>
+                            </tr>
+
+                            <tr class="border-t">
+                                <td class="p-3">
+                                    Oil Filter
+                                </td>
+
+                                <td>
+                                    Every 10,000 KM
+                                </td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                        Due Soon
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Replace next service
+                                </td>
+                            </tr>
+
+                            <tr class="border-t">
+                                <td class="p-3">
+                                    Diesel Filter
+                                </td>
+
+                                <td>
+                                    Every 20,000 KM
+                                </td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                        Good
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Last replaced Apr 2026
+                                </td>
+                            </tr>
+
+                            <tr class="border-t">
+                                <td class="p-3">
+                                    Air Cleaner
+                                </td>
+
+                                <td>
+                                    Every 15,000 KM
+                                </td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
+                                        Replacement Required
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Dirty and clogged
+                                </td>
+                            </tr>
+
+                            <tr class="border-t">
+                                <td class="p-3">
+                                    Cabin Bush (L/R)
+                                </td>
+
+                                <td>
+                                    Every 24 Months
+                                </td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                        Good
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Installed Jan 2026
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
                 </div>
 
             </div>
@@ -570,7 +709,151 @@
                 </div>
 
             </div>
+            <!-- ================= ADD SPARE PART OFFCANVAS ================= -->
+            <div x-show="sparePart"
+                x-transition
+                class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
+                <div
+                    @click.away="sparePart=false"
+                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-center p-6 border-b">
+
+                        <h2 class="text-lg font-semibold">
+                            Add Spare Part
+                        </h2>
+
+                        <button
+                            @click="sparePart=false"
+                            class="text-gray-500 hover:text-black">
+
+                            ✕
+
+                        </button>
+
+                    </div>
+
+                    <!-- BODY -->
+                    <div class="flex-1 overflow-y-auto p-6">
+
+                        <form class="space-y-4">
+
+                            <!-- PART NAME -->
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Spare Part Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    placeholder="Example: Oil Filter"
+                                    class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- PERIOD -->
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Maintenance Period
+                                </label>
+
+                                <input
+                                    type="text"
+                                    placeholder="Example: Every 10,000 KM"
+                                    class="w-full border rounded-lg p-2">
+                            </div>
+
+                            <!-- STATUS -->
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Status
+                                </label>
+
+                                <select
+                                    class="w-full border rounded-lg p-2">
+
+                                    <option>Good</option>
+                                    <option>Due Soon</option>
+                                    <option>Replacement Required</option>
+
+                                </select>
+                            </div>
+
+                            <!-- REMARK -->
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Remarks
+                                </label>
+
+                                <textarea
+                                    rows="4"
+                                    placeholder="Enter remarks..."
+                                    class="w-full border rounded-lg p-2"></textarea>
+                            </div>
+
+                            <!-- REQUIRED NOTIFY -->
+                            <div x-data="{ notify: true }">
+
+                                <div class="flex items-center justify-between border rounded-lg px-4 py-3">
+
+                                    <div>
+                                        <p class="font-medium text-sm">
+                                            Enable Notification
+                                        </p>
+
+                                        <p class="text-xs text-gray-500">
+                                            Notify when spare part replacement is due.
+                                        </p>
+                                    </div>
+
+                                    <!-- SWITCH -->
+                                    <button
+                                        type="button"
+                                        @click="notify = !notify"
+                                        :class="notify ? 'bg-green-600' : 'bg-gray-300'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full transition">
+
+                                        <span
+                                            :class="notify ? 'translate-x-6' : 'translate-x-1'"
+                                            class="inline-block h-4 w-4 transform rounded-full bg-white transition">
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="border-t p-6 flex justify-end gap-2">
+
+                        <button
+                            type="button"
+                            @click="sparePart=false"
+                            class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+
+                            Cancel
+
+                        </button>
+
+                        <button
+                            type="button"
+                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+
+                            Add Spare Part
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
             <!-- FOOTER -->
             <footer class="mt-10 text-xs text-gray-500 border-t pt-4">
                 Copyright © 2026 AZCode
