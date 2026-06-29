@@ -1,531 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Ticket View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <body class="bg-gray-100 text-gray-700">
 
 <div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
 
-    <!-- ================= SIDEBAR ================= -->
-    <!-- MOBILE OVERLAY -->
-    <div x-show="sidebar"
-        x-transition
-        class="fixed inset-0 bg-black/40 z-40 lg:hidden"
-        @click="sidebar=false">
-    </div>
+    <div x-show="sidebar" x-transition class="fixed inset-0 bg-black/40 z-40 lg:hidden" @click="sidebar=false"></div>
 
-    <!-- SIDEBAR -->
-    <aside
-        :class="sidebar ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed lg:translate-x-0 transition-transform duration-300 z-50
-            w-64 h-screen bg-gray-100 border-r border-gray-200">
-
-        <!-- LOGO -->
+    <aside :class="sidebar ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed lg:translate-x-0 transition-transform duration-300 z-50 w-64 h-screen bg-gray-100 border-r border-gray-200">
         <div class="p-4 border-b flex items-center justify-between">
-
-            <a href="https://azcodeee.github.io/fleet-office/">
-                <img src="assets/images/logo.jpeg" class="h-32" alt="Logo">
-            </a>
-
-            <!-- CLOSE BUTTON MOBILE -->
-            <button class="lg:hidden"
-                    @click="sidebar=false">
-
-                ✕
-
-            </button>
-
+            <a href="https://azcodeee.github.io/fleet-office/"><img src="assets/images/logo.jpeg" class="h-32" alt="Logo"></a>
+            <button class="lg:hidden" @click="sidebar=false">✕</button>
         </div>
-
-        <!-- NAV -->
         <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
-
-            <!-- Dashboard -->
-            <a href="index.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                Dashboard
-            </a>
-
-            <!-- Project -->
-            <a href="project.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-                <i data-lucide="folder" class="w-5 h-5"></i>
-                Project
-            </a>
-
-            <!-- Ticket -->
-            <a href="ticket.html"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
-                <i data-lucide="ticket" class="w-5 h-5"></i>
-                Ticket
-            </a>
-
-            <a href="maintenance.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-                <i data-lucide="wrench" class="w-5 h-5"></i>
-                Maintenance
-
-            </a>
-
-            <!-- SETTINGS -->
+            <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</a>
+            <a href="project.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition"><i data-lucide="folder" class="w-5 h-5"></i> Project</a>
+            <a href="ticket.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium"><i data-lucide="ticket" class="w-5 h-5"></i> Ticket</a>
+            <a href="maintenance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition"><i data-lucide="wrench" class="w-5 h-5"></i> Maintenance</a>
             <div x-data="{ open: false }" class="space-y-1">
-
-                <button @click="open = !open"
-                        class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                    <i data-lucide="settings" class="w-5 h-5"></i>
-                    Settings
-
-                    <i data-lucide="chevron-down"
-                    class="w-4 h-4 ml-auto transition-transform"
-                    :class="{ 'rotate-180': open }"></i>
+                <button @click="open = !open" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+                    <i data-lucide="settings" class="w-5 h-5"></i> Settings
+                    <i data-lucide="chevron-down" class="w-4 h-4 ml-auto transition-transform" :class="open ? 'rotate-180' : ''"></i>
                 </button>
-
-                <div x-show="open" x-transition class="pl-8 space-y-1">
-
-                    <a href="driver.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="user" class="w-4 h-4"></i>
-                        Driver
-                    </a>
-
-                    <a href="region.html"
-                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="map" class="w-4 h-4"></i>
-                        Region
-
-                    </a>
-
-<a href="sites.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="map-pin" class="w-4 h-4"></i>
-                        Sites
-                    </a>
-                    <a href="lorry.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="truck" class="w-4 h-4"></i>
-                        Lorry
-                    </a>
-
+                <div x-show="open" class="pl-4 space-y-1">
+                    <a href="driver.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm"><i data-lucide="user" class="w-4 h-4"></i> Drivers</a>
+                    <a href="lorry.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm"><i data-lucide="truck" class="w-4 h-4"></i> Lorries</a>
+                    <a href="region.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm"><i data-lucide="map-pin" class="w-4 h-4"></i> Regions</a>
+                    <a href="site.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm"><i data-lucide="map" class="w-4 h-4"></i> Sites</a>
                 </div>
-
             </div>
-
         </nav>
     </aside>
 
+    <div class="lg:ml-64 flex flex-col min-h-screen">
 
-    <!-- ================= MAIN ================= -->
-    <div class="lg:ml-64 min-h-screen">
-
-        <!-- HEADER -->
-        <header class="fixed top-0 right-0 left-0 lg:left-64
-               h-16 bg-white border-b border-gray-200
-               flex items-center justify-between px-4 lg:px-6 z-30">
-
-            <div class="flex items-center gap-3">
-
-                <!-- MOBILE MENU -->
-                <button class="lg:hidden"
-                        @click="sidebar=true">
-
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-
-                </button>
-
-                <h1 class="text-sm lg:text-lg font-semibold uppercase">
-                    Fleet Management System
-                </h1>
-
-            </div>
-
-            <!-- PROFILE DROPDOWN -->
+        <header class="fixed top-0 left-0 lg:left-64 right-0 z-30 bg-white border-b h-16 flex items-center px-4 justify-between">
+            <button class="lg:hidden" @click="sidebar=true"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            <div class="font-semibold text-gray-800 lg:block hidden">Fleet Management System</div>
             <div x-data="{ open: false }" class="relative">
-
-                <!-- TRIGGER -->
-                <button @click="open = !open"
-                        class="flex items-center gap-3 focus:outline-none">
-
-                    <img src="assets/images/avatar-2.jpg"
-                        class="w-10 h-10 rounded-full border" />
-
-                    <div class="text-sm text-left">
-                        <div class="font-medium">Chris Martin</div>
-                        <div class="text-gray-500 text-xs">martin@gmail.com</div>
-                    </div>
-
+                <button @click="open = !open" class="flex items-center gap-2 text-sm">
+                    <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs">AD</div>
+                    <span class="hidden sm:block">Admin</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
                 </button>
-
-                <!-- DROPDOWN -->
-                <div x-show="open"
-                    @click.away="open = false"
-                    x-transition
-                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-
-                    <!-- PROFILE -->
-                    <a href="profile.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
-
-                        <i data-lucide="user-circle" class="w-4 h-4"></i>
-                        Profile
-                    </a>
-
-                    <!-- DIVIDER -->
+                <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100"><i data-lucide="user-circle" class="w-4 h-4"></i> Profile</a>
                     <div class="border-t"></div>
-
-                    <!-- LOGOUT -->
-                    <a href="logout.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-
-                        <i data-lucide="log-out" class="w-4 h-4"></i>
-                        Logout
-                    </a>
-
+                    <a href="logout.html" class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50"><i data-lucide="log-out" class="w-4 h-4"></i> Logout</a>
                 </div>
-
             </div>
-
         </header>
 
-        <main class="pt-20 p-6" x-data="ticketPage()">
+        <main class="pt-20 p-6" x-data="ticketPage()" x-init="init()">
 
-            <!-- ================= TICKET CARD ================= -->
+            <!-- BACK LINK -->
+            <div class="mb-4">
+                <a href="ticket.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 transition">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Tickets
+                </a>
+            </div>
+
+            <!-- TICKET CARD -->
             <div class="bg-white rounded-xl shadow p-6">
 
-                <!-- TOP -->
+                <!-- TOP ROW -->
                 <div class="flex justify-between items-start">
-
                     <div>
-                        <h2 class="text-xl font-semibold">#TK-1001 Engine Issue</h2>
-                        <p class="text-sm text-gray-500">Project Alpha</p>
+                        <h2 class="text-xl font-semibold" x-text="form.title"></h2>
+                        <p class="text-sm text-gray-500 mt-0.5">
+                            <a href="project-view.html" class="hover:text-green-600 transition" x-text="form.project"></a>
+                        </p>
                     </div>
-
                     <div class="flex items-center gap-3">
-
-                        <!-- STATUS -->
-                        <span :class="statusClass"
-                            class="px-3 py-1 text-xs rounded">
-                            <span x-text="form.status"></span>
-                        </span>
-
-                        <!-- 3 DOT MENU -->
+                        <span :class="statusClass" class="px-3 py-1 text-xs rounded-full font-medium" x-text="form.status"></span>
                         <div class="relative">
-
                             <button @click="menu=!menu" class="p-2 hover:bg-gray-100 rounded-lg">
                                 <i data-lucide="more-vertical" class="w-5 h-5"></i>
                             </button>
-
-                            <div x-show="menu"
-                                 @click.away="menu=false"
+                            <div x-show="menu" @click.away="menu=false"
                                  class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow z-50">
-
-                                <button @click="confirmClose"
-                                        class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex gap-2">
-
-                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                    Close Ticket
-                                </button>
-
                                 <button @click="edit=true; menu=false"
-                                        class="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-2">
-                                    <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                    Edit
+                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2">
+                                    <i data-lucide="edit-3" class="w-4 h-4"></i> Edit
                                 </button>
-
-                                <button class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex gap-2">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    Delete
+                                <button @click="confirmClose"
+                                        class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i> Close Ticket
                                 </button>
-
+                                <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
+                                </button>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
-                <!-- DETAILS -->
-                <div class="grid grid-cols-3 gap-4 mt-6 text-sm">
-
+                <!-- INFO GRID — updated with project fields -->
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 mt-6 text-sm">
                     <div>
-                        <p class="text-gray-500">Loading Site</p>
-                        <p class="font-semibold">KL Quarry</p>
+                        <p class="text-gray-500">Project</p>
+                        <p class="font-semibold" x-text="form.project"></p>
                     </div>
-
-                    <div>
-                        <p class="text-gray-500">Dumping Site</p>
-                        <p class="font-semibold">Cyberjaya Site A</p>
-                    </div>
-
                     <div>
                         <p class="text-gray-500">Region</p>
-                        <p class="font-semibold">Kuching</p>
+                        <p class="font-semibold" x-text="form.region"></p>
                     </div>
-
+                    <div>
+                        <p class="text-gray-500">Rate</p>
+                        <p class="font-semibold text-green-700" x-text="'RM ' + form.rate.toFixed(2) + ' / ton'"></p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Loading Site</p>
+                        <p class="font-semibold" x-text="form.loadingSite"></p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Dumping Site</p>
+                        <p class="font-semibold" x-text="form.dumpingSite"></p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Weight (ton)</p>
+                        <p class="font-semibold" x-text="form.ton.toFixed(2) + ' t'"></p>
+                    </div>
                     <div>
                         <p class="text-gray-500">Driver</p>
-                        <p class="font-semibold">John Tan</p>
+                        <p class="font-semibold" x-text="form.driver"></p>
                     </div>
-
                     <div>
                         <p class="text-gray-500">Lorry</p>
-                        <p class="font-semibold">JQX 8821</p>
+                        <p class="font-semibold font-mono" x-text="form.lorry"></p>
                     </div>
-
+                    <div>
+                        <p class="text-gray-500">Est. Amount</p>
+                        <p class="font-semibold text-green-700" x-text="'RM ' + (form.ton * form.rate).toFixed(2)"></p>
+                    </div>
                     <div>
                         <p class="text-gray-500">Priority</p>
-                        <p class="font-semibold text-red-600">High</p>
+                        <p class="font-semibold" :class="{
+                            'text-red-600':    form.priority === 'High',
+                            'text-yellow-600': form.priority === 'Medium',
+                            'text-gray-600':   form.priority === 'Low'
+                        }" x-text="form.priority"></p>
                     </div>
-
                     <div>
                         <p class="text-gray-500">Created Date</p>
                         <p class="font-semibold">2026-05-28</p>
                     </div>
-
                 </div>
 
                 <!-- DESCRIPTION -->
-                <div class="mt-6">
+                <div class="mt-6 border-t pt-4">
                     <p class="text-gray-500 text-sm">Description</p>
-                    <p class="mt-1 text-sm">
-                        Engine overheating issue detected during uphill transport. Needs inspection.
-                    </p>
-                </div>
-
-                <!-- ================= ATTACHMENTS ================= -->
-                <div class="mt-6 bg-white rounded-xl shadow p-6">
-
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-sm font-semibold uppercase text-gray-600">
-                            Attachments (Proof of Work)
-                        </h3>
-
-                        <span class="text-xs text-gray-400">
-                            Driver uploaded photos
-                        </span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
-                        <!-- LOADING SITE PROOF -->
-                        <div class="border rounded-lg p-4 bg-gray-50">
-
-                            <div class="flex justify-between items-center">
-                                <p class="font-semibold text-sm">Loading Site Proof</p>
-                                <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded">
-                                    KL Quarry
-                                </span>
-                            </div>
-
-                            <div class="mt-3">
-                                <img src="assets/images/loading-sites.jpg"
-                                    class="rounded-lg w-full h-40 object-cover border">
-                            </div>
-
-                            <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
-
-                                <span>Driver: John Tan</span>
-                                <span>2026-05-28 10:32</span>
-
-                            </div>
-
-                            <a href="assets/images/loading-sites.jpg"
-                            target="_blank"
-                            class="mt-3 w-full py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center">
-                                View Full Image
-                            </a>
-                        </div>
-
-                        <!-- DUMPING SITE PROOF -->
-                        <div class="border rounded-lg p-4 bg-gray-50">
-
-                            <div class="flex justify-between items-center">
-                                <p class="font-semibold text-sm">Dumping Site Proof</p>
-                                <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">
-                                    Cyberjaya Site A
-                                </span>
-                            </div>
-
-                            <div class="mt-3">
-                                <img src="assets/images/dumping-sites.jpg"
-                                    class="rounded-lg w-full h-40 object-cover border">
-                            </div>
-
-                            <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
-
-                                <span>Driver: John Tan</span>
-                                <span>2026-05-28 12:10</span>
-
-                            </div>
-
-                            <a href="assets/images/dumping-sites.jpg"
-                            target="_blank"
-                            class="mt-3 w-full py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center">
-                                View Full Image
-                            </a>
-                        </div>
-
-                    </div>
+                    <p class="mt-1 text-sm" x-text="form.description"></p>
                 </div>
 
             </div>
 
-            <!-- ================= EDIT OFFCANVAS ================= -->
-            <div x-show="edit"
-                class="fixed inset-0 flex justify-end bg-black/40 z-50">
+            <!-- ATTACHMENTS -->
+            <div class="mt-6 bg-white rounded-xl shadow p-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-semibold uppercase text-gray-600">Attachments (Proof of Work)</h3>
+                    <span class="text-xs text-gray-400">Driver uploaded photos</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
-                <div @click.away="edit = false"
-                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
-
-                    <!-- HEADER -->
-                    <div class="flex justify-between items-center p-6 border-b">
-
-                        <h2 class="text-lg font-semibold">
-                            Edit Ticket
-                        </h2>
-
-                        <button @click="edit = false"
-                                class="text-gray-500 hover:text-black">
-                            ✕
-                        </button>
-
+                    <!-- LOADING SITE PROOF -->
+                    <div class="border rounded-lg p-4 bg-gray-50">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold text-sm">Loading Site Proof</p>
+                            <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded" x-text="form.loadingSite"></span>
+                        </div>
+                        <div class="mt-3">
+                            <img src="assets/images/loading-sites.jpg" class="rounded-lg w-full h-40 object-cover border" onerror="this.parentElement.innerHTML='<div class=\'h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm\'>No image</div>'">
+                        </div>
+                        <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                            <span x-text="'Driver: ' + form.driver"></span>
+                            <span>2026-05-28 10:32</span>
+                        </div>
+                        <a href="assets/images/loading-sites.jpg" target="_blank"
+                           class="mt-3 w-full py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center">
+                            View Full Image
+                        </a>
                     </div>
 
-                    <!-- BODY -->
-                    <div class="flex-1 overflow-y-auto p-6">
+                    <!-- DUMPING SITE PROOF -->
+                    <div class="border rounded-lg p-4 bg-gray-50">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold text-sm">Dumping Site Proof</p>
+                            <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded" x-text="form.dumpingSite"></span>
+                        </div>
+                        <div class="mt-3">
+                            <img src="assets/images/dumping-sites.jpg" class="rounded-lg w-full h-40 object-cover border" onerror="this.parentElement.innerHTML='<div class=\'h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm\'>No image</div>'">
+                        </div>
+                        <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                            <span x-text="'Driver: ' + form.driver"></span>
+                            <span>2026-05-28 12:10</span>
+                        </div>
+                        <a href="assets/images/dumping-sites.jpg" target="_blank"
+                           class="mt-3 w-full py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center">
+                            View Full Image
+                        </a>
+                    </div>
 
+                </div>
+            </div>
+
+            <!-- EDIT OFFCANVAS -->
+            <div x-show="edit" class="fixed inset-0 flex justify-end bg-black/40 z-50">
+                <div @click.away="edit = false" class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+                    <div class="flex justify-between items-center p-6 border-b">
+                        <h2 class="text-lg font-semibold">Edit Ticket</h2>
+                        <button @click="edit = false" class="text-gray-500 hover:text-black text-xl">✕</button>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-6">
                         <form class="space-y-4">
 
                             <!-- Title -->
                             <div>
                                 <label class="text-sm font-medium">Title</label>
-                                <input x-model="form.title"
-                                    class="w-full border rounded-lg p-2">
+                                <input type="text" x-model="form.title"
+                                       class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
                             </div>
 
-                            <!-- Region -->
-                            <div>
-                                <label class="text-sm font-medium">Region</label>
-
-                                <select x-model="form.region"
-                                        class="w-full border rounded-lg p-2">
-
-                                    <option value="">Select Region</option>
-                                    <option value="Kuching">Kuching</option>
-                                    <option value="Lawas">Lawas</option>
-                                    <option value="Miri">Miri</option>
-                                    <option value="Bintulu">Bintulu</option>
-
-                                </select>
-                            </div>
-
-                            <!-- Loading Site -->
-                            <div>
-                                <label class="text-sm font-medium">Loading Site</label>
-                                <select x-model="form.loadingSite"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>KL Quarry</option>
-                                    <option>Shah Alam Warehouse</option>
-                                </select>
-                            </div>
-
-                            <!-- Dumping Site -->
-                            <div>
-                                <label class="text-sm font-medium">Dumping Site</label>
-                                <select x-model="form.dumpingSite"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>Cyberjaya Construction Site</option>
-                                    <option>Putrajaya Site A</option>
-                                    <option>Bangi Disposal Area</option>
-                                </select>
+                            <!-- Project info (read-only) -->
+                            <div class="rounded-lg border border-green-200 bg-green-50 p-3 text-sm">
+                                <p class="font-medium text-green-800 mb-2">Project: <span x-text="form.project"></span></p>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-700">
+                                    <div><p class="text-xs text-gray-500">Region</p><p class="font-medium" x-text="form.region"></p></div>
+                                    <div><p class="text-xs text-gray-500">Rate</p><p class="font-medium" x-text="'RM ' + form.rate.toFixed(2) + '/ton'"></p></div>
+                                    <div><p class="text-xs text-gray-500">Loading Site</p><p class="font-medium" x-text="form.loadingSite"></p></div>
+                                    <div><p class="text-xs text-gray-500">Dumping Site</p><p class="font-medium" x-text="form.dumpingSite"></p></div>
+                                </div>
                             </div>
 
                             <!-- Driver -->
                             <div>
-                                <label class="text-sm font-medium">Assigned Driver</label>
-                                <select x-model="form.driver"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>John Tan</option>
-                                    <option>Ahmad Faiz</option>
+                                <label class="text-sm font-medium">Driver</label>
+                                <select x-model="form.driver" class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option>John Tan</option><option>Ahmad Faiz</option><option>Rajesh Kumar</option><option>David Lim</option>
                                 </select>
                             </div>
 
                             <!-- Lorry -->
                             <div>
-                                <label class="text-sm font-medium">Assigned Lorry</label>
-                                <select x-model="form.lorry"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>JQX 8821</option>
-                                    <option>VBL 1022</option>
+                                <label class="text-sm font-medium">Lorry</label>
+                                <select x-model="form.lorry" class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option>JQX 8821</option><option>VBL 1022</option><option>QRS 3344</option><option>MNP 5566</option>
                                 </select>
+                            </div>
+
+                            <!-- Ton -->
+                            <div>
+                                <label class="text-sm font-medium">Weight (ton)</label>
+                                <div class="relative mt-1">
+                                    <input type="number" x-model="form.ton" step="0.01" min="0"
+                                           class="w-full border rounded-lg px-3 pr-12 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <span class="absolute right-3 top-2.5 text-gray-400 text-sm">ton</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    Estimated: <span class="font-semibold text-green-700"
+                                        x-text="'RM ' + (parseFloat(form.ton||0) * form.rate).toFixed(2)"></span>
+                                </p>
                             </div>
 
                             <!-- Priority -->
                             <div>
                                 <label class="text-sm font-medium">Priority</label>
-                                <select x-model="form.priority"
-                                        class="w-full border rounded-lg p-2">
-                                    <option>Low</option>
-                                    <option>Medium</option>
-                                    <option>High</option>
+                                <select x-model="form.priority" class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option>Low</option><option>Medium</option><option>High</option>
                                 </select>
                             </div>
 
                             <!-- Description -->
                             <div>
                                 <label class="text-sm font-medium">Description</label>
-                                <textarea x-model="form.description"
-                                        class="w-full border rounded-lg p-2"
-                                        rows="3"></textarea>
+                                <textarea x-model="form.description" rows="3"
+                                          class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                             </div>
 
+                            <div class="flex justify-end gap-2 pt-4 border-t">
+                                <button type="button" @click="edit = false" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Cancel</button>
+                                <button type="button" @click="edit = false" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save Ticket</button>
+                            </div>
                         </form>
-
                     </div>
-
-                    <!-- FOOTER -->
-                    <div class="border-t p-6 flex justify-end gap-2">
-
-                        <button type="button"
-                                @click="edit = false"
-                                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                            Cancel
-                        </button>
-
-                        <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Save Ticket
-                        </button>
-
-                    </div>
-
                 </div>
             </div>
 
-            <!-- FOOTER -->
-            <footer class="mt-10 text-xs text-gray-500 border-t pt-4">
-                Copyright © 2026 AZCode
-            </footer>
-
+            <footer class="mt-10 text-xs text-gray-500 border-t pt-4">Copyright © 2026 AZCode</footer>
         </main>
-
     </div>
-
 </div>
 
 <script>
@@ -535,65 +307,53 @@ function ticketPage() {
         menu: false,
 
         form: {
-            title: "#TK-1001 Engine Issue",
-            region: "Kuching",
-            loadingSite: "KL Quarry",
-            dumpingSite: "Cyberjaya Construction Site",
-            driver: "John Tan",
-            lorry: "JQX 8821",
-            priority: "Medium",
-            description: "Engine overheating issue detected",
-            status: "Pending"
+            title: '#TK-1001 Morning Delivery Run',
+            project: 'Project Alpha',
+            region: 'Kuching',
+            loadingSite: 'Kuching Quarry',
+            dumpingSite: 'Samarahan Dump Site',
+            rate: 45.00,
+            driver: 'John Tan',
+            lorry: 'JQX 8821',
+            ton: 12.50,
+            priority: 'High',
+            description: 'Engine overheating issue detected during uphill transport. Needs inspection.',
+            status: 'Pending',
         },
 
-        // CLOSE CONFIRMATION
+        get statusClass() {
+            return {
+                'bg-yellow-100 text-yellow-700': this.form.status === 'Pending',
+                'bg-blue-100 text-blue-700':     this.form.status === 'Ongoing',
+                'bg-green-100 text-green-700':   this.form.status === 'Completed',
+                'bg-red-100 text-red-700':       this.form.status === 'Delayed' || this.form.status === 'Closed',
+            };
+        },
+
+        init() {
+            lucide.createIcons();
+        },
+
         confirmClose() {
             Swal.fire({
-                title: "Close Ticket?",
-                text: "This ticket will be marked as CLOSED.",
-                icon: "warning",
+                title: 'Close Ticket?',
+                text: 'This ticket will be marked as Closed.',
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Yes, close it",
-                cancelButtonText: "Cancel"
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, close it',
+                cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.closeTicket();
+                    this.form.status = 'Closed';
+                    this.menu = false;
+                    Swal.fire('Closed!', 'Ticket has been closed successfully.', 'success');
                 }
             });
         },
-
-        // CLOSE TICKET
-        closeTicket() {
-            this.form.status = "Closed";
-            this.menu = false;
-
-            Swal.fire({
-                title: "Closed!",
-                text: "Ticket has been closed successfully.",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false
-            });
-        },
-
-        // STATUS CLASS
-        get statusClass() {
-            if (this.form.status === "Closed") {
-                return "bg-gray-200 text-gray-700";
-            }
-            if (this.form.status === "Ongoing") {
-                return "bg-green-100 text-green-700";
-            }
-            return "bg-yellow-100 text-yellow-700";
-        }
     }
 }
-
-document.addEventListener("alpine:initialized", () => {
-    lucide.createIcons();
-});
 </script>
 </body>
 </html>

@@ -15,7 +15,6 @@
 
 <div x-data="{ sidebar:false }" class="min-h-screen bg-gray-100">
 
-    <!-- ================= SIDEBAR (your new system) ================= -->
     <!-- MOBILE OVERLAY -->
     <div x-show="sidebar"
         x-transition
@@ -31,39 +30,27 @@
 
         <!-- LOGO -->
         <div class="p-4 border-b flex items-center justify-between">
-
             <a href="https://azcodeee.github.io/fleet-office/">
                 <img src="assets/images/logo.jpeg" class="h-32" alt="Logo">
             </a>
-
-            <!-- CLOSE BUTTON MOBILE -->
-            <button class="lg:hidden"
-                    @click="sidebar=false">
-
-                ✕
-
-            </button>
-
+            <button class="lg:hidden" @click="sidebar=false">✕</button>
         </div>
 
         <!-- NAV -->
         <nav class="p-2 space-y-1 overflow-y-auto h-[calc(100vh-100px)]">
 
-            <!-- Dashboard -->
             <a href="index.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                 Dashboard
             </a>
 
-            <!-- Project -->
             <a href="project.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow text-black font-medium">
                 <i data-lucide="folder" class="w-5 h-5"></i>
                 Project
             </a>
 
-            <!-- Ticket -->
             <a href="ticket.html"
                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="ticket" class="w-5 h-5"></i>
@@ -71,570 +58,398 @@
             </a>
 
             <a href="maintenance.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
                 <i data-lucide="wrench" class="w-5 h-5"></i>
                 Maintenance
-
             </a>
 
             <!-- SETTINGS -->
             <div x-data="{ open: false }" class="space-y-1">
-
                 <button @click="open = !open"
                         class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
                     <i data-lucide="settings" class="w-5 h-5"></i>
                     Settings
-
-                    <i data-lucide="chevron-down"
-                    class="w-4 h-4 ml-auto transition-transform"
-                    :class="{ 'rotate-180': open }"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 ml-auto transition-transform" :class="open ? 'rotate-180' : ''"></i>
                 </button>
-
-                <div x-show="open" x-transition class="pl-8 space-y-1">
-
-                    <a href="driver.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="user" class="w-4 h-4"></i>
-                        Driver
+                <div x-show="open" class="pl-4 space-y-1">
+                    <a href="driver.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm">
+                        <i data-lucide="user" class="w-4 h-4"></i> Drivers
                     </a>
-
-                    <a href="region.html"
-                       class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="map" class="w-4 h-4"></i>
-                        Region
-
+                    <a href="lorry.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm">
+                        <i data-lucide="truck" class="w-4 h-4"></i> Lorries
                     </a>
-
-<a href="sites.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="map-pin" class="w-4 h-4"></i>
-                        Sites
+                    <a href="region.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> Regions
                     </a>
-                    <a href="lorry.html"
-                    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition">
-
-                        <i data-lucide="truck" class="w-4 h-4"></i>
-                        Lorry
+                    <a href="site.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white hover:shadow transition text-sm">
+                        <i data-lucide="map" class="w-4 h-4"></i> Sites
                     </a>
-
                 </div>
-
             </div>
 
         </nav>
     </aside>
 
-
-    <!-- ================= MAIN ================= -->
-    <div class="lg:ml-64 min-h-screen">
+    <!-- MAIN -->
+    <div class="lg:ml-64 flex flex-col min-h-screen">
 
         <!-- HEADER -->
-        <header class="fixed top-0 right-0 left-0 lg:left-64
-               h-16 bg-white border-b border-gray-200
-               flex items-center justify-between px-4 lg:px-6 z-30">
-
-            <div class="flex items-center gap-3">
-
-                <!-- MOBILE MENU -->
-                <button class="lg:hidden"
-                        @click="sidebar=true">
-
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-
-                </button>
-
-                <h1 class="text-sm lg:text-lg font-semibold uppercase">
-                    Fleet Management System
-                </h1>
-
-            </div>
-
-            <!-- PROFILE DROPDOWN -->
+        <header class="fixed top-0 left-0 lg:left-64 right-0 z-30 bg-white border-b h-16 flex items-center px-4 justify-between">
+            <button class="lg:hidden" @click="sidebar=true">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <div class="font-semibold text-gray-800 lg:block hidden">Fleet Management System</div>
             <div x-data="{ open: false }" class="relative">
-
-                <!-- TRIGGER -->
-                <button @click="open = !open"
-                        class="flex items-center gap-3 focus:outline-none">
-
-                    <img src="assets/images/avatar-2.jpg"
-                        class="w-10 h-10 rounded-full border" />
-
-                    <div class="text-sm text-left">
-                        <div class="font-medium">Chris Martin</div>
-                        <div class="text-gray-500 text-xs">martin@gmail.com</div>
-                    </div>
-
+                <button @click="open = !open" class="flex items-center gap-2 text-sm">
+                    <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs">AD</div>
+                    <span class="hidden sm:block">Admin</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
                 </button>
-
-                <!-- DROPDOWN -->
-                <div x-show="open"
-                    @click.away="open = false"
-                    x-transition
-                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-
-                    <!-- PROFILE -->
-                    <a href="profile.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
-
-                        <i data-lucide="user-circle" class="w-4 h-4"></i>
-                        Profile
+                <div x-show="open" @click.away="open = false" x-transition
+                     class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
+                        <i data-lucide="user-circle" class="w-4 h-4"></i> Profile
                     </a>
-
-                    <!-- DIVIDER -->
                     <div class="border-t"></div>
-
-                    <!-- LOGOUT -->
-                    <a href="logout.html"
-                    class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-
-                        <i data-lucide="log-out" class="w-4 h-4"></i>
-                        Logout
+                    <a href="logout.html" class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
                     </a>
-
                 </div>
-
             </div>
-
         </header>
 
         <!-- CONTENT -->
-        <main class="pt-20 p-6" x-data="{ open: false }">
+        <main class="pt-20 p-6" x-data="projectTable()" x-init="init()">
 
             <!-- TITLE -->
             <div class="flex justify-between items-center mb-4">
-
                 <div>
                     <h2 class="text-xl font-semibold">Project List</h2>
-                    <p class="text-sm text-gray-500">
-                        Each project contains sites, tickets, drivers & lorries
-                    </p>
+                    <p class="text-sm text-gray-500">Each project has a region, loading & dumping site, and a rate</p>
                 </div>
-
-                <button @click="open = true"
+                <button @click="addOpen = true"
                         class="bg-green-600 text-white px-3 py-2 text-sm lg:px-4 lg:text-base rounded-lg hover:bg-green-700">
                     + Add Project
                 </button>
-
             </div>
 
             <!-- TABLE -->
-            <div class="bg-white rounded-xl shadow" x-data="ticketTable()" x-init="init()">
+            <div class="bg-white rounded-xl shadow">
 
-                <div class="p-4 border-b flex justify-between items-center">
-
+                <div class="p-4 border-b flex flex-wrap justify-between items-center gap-3">
                     <!-- REGION FILTER -->
                     <select x-model="selectedRegion"
-                            class="border rounded-lg px-3 py-2 bg-white w-48">
-
+                            class="border rounded-lg px-3 py-2 bg-white w-48 text-sm">
                         <option value="">All Regions</option>
-                        <option value="Kuching">Kuching</option>
-                        <option value="Lawas">Lawas</option>
-                        <option value="Miri">Miri</option>
-                        <option value="Bintulu">Bintulu</option>
-
+                        <template x-for="r in regions" :key="r">
+                            <option :value="r" x-text="r"></option>
+                        </template>
                     </select>
-                    
-                    <input type="text"
-                        placeholder="Search projects..."
-                        class="border rounded-lg px-3 py-2 w-64">
-
-                    
-
+                    <input type="text" x-model="search" placeholder="Search projects..."
+                           class="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-52">
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-
-                    <thead class="bg-gray-50 text-left">
-                        <tr>
-                            <th class="p-3">Project Name</th>
-                            <th>Region</th>
-                            <th>Site</th>
-                            <th>Total Tickets</th>
-                            <th>Status</th>
-                            <th class="text-right p-3">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <template x-for="p in filteredProjects" :key="p.name">
-
-                            <tr class="border-t hover:bg-gray-50">
-
-                                <td class="p-3 font-medium" x-text="p.name"></td>
-
-                                <td x-text="p.region"></td>
-
-                                <td x-text="p.site"></td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded"
-                                        x-text="p.tickets + ' Tickets'">
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span class="px-2 py-1 text-xs rounded"
-                                        :class="{
+                        <thead class="bg-gray-50 text-left border-b">
+                            <tr>
+                                <th class="p-3 font-semibold text-gray-700">Project Name</th>
+                                <th class="p-3 font-semibold text-gray-700">Client</th>
+                                <th class="p-3 font-semibold text-gray-700">Region</th>
+                                <th class="p-3 font-semibold text-gray-700">Loading Site</th>
+                                <th class="p-3 font-semibold text-gray-700">Dumping Site</th>
+                                <th class="p-3 font-semibold text-gray-700">Rate (RM/ton)</th>
+                                <th class="p-3 font-semibold text-gray-700">Status</th>
+                                <th class="p-3 text-right font-semibold text-gray-700">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="p in filteredProjects" :key="p.id">
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-900" x-text="p.name"></td>
+                                    <td class="p-3 text-gray-600" x-text="p.client || '—'"></td>
+                                    <td class="p-3" x-text="p.region"></td>
+                                    <td class="p-3" x-text="p.loadingSite"></td>
+                                    <td class="p-3" x-text="p.dumpingSite"></td>
+                                    <td class="p-3 font-mono text-sm" x-text="'RM ' + p.rate.toFixed(2)"></td>
+                                    <td class="p-3">
+                                        <span :class="{
                                             'bg-blue-100 text-blue-700': p.status === 'New',
                                             'bg-yellow-100 text-yellow-700': p.status === 'In Progress',
-                                            'bg-green-100 text-green-700': p.status === 'Completed'
-                                        }"
-                                        x-text="p.status">
-                                    </span>
-                                </td>
-
-                                <td class="text-right p-3">
-                                    <a href="project-view.html"
-                                    class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-                                    </a>
-                                </td>
-
+                                            'bg-green-100 text-green-700': p.status === 'Completed',
+                                            'bg-red-100 text-red-700': p.status === 'Cancelled'
+                                        }" class="px-2 py-1 rounded text-xs font-medium" x-text="p.status"></span>
+                                    </td>
+                                    <td class="p-3 text-right">
+                                        <a :href="'project-view.html'" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 hover:bg-white hover:shadow">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </template>
+                            <tr x-show="filteredProjects.length === 0">
+                                <td colspan="8" class="p-8 text-center text-gray-400 italic text-sm">No projects found.</td>
                             </tr>
-
-                        </template>
-                    </tbody>
-
-                </table>
+                        </tbody>
+                    </table>
                 </div>
-
             </div>
 
-            <!-- FOOTER -->
             <footer class="mt-10 text-xs text-gray-500 border-t pt-4">
                 Copyright © 2026 AZCode
             </footer>
-            <!-- ================= OFFCANVAS ================= -->
-            <div x-show="open"
-                x-transition
-                class="fixed inset-0 flex justify-end bg-black/40 z-50">
 
-                <div @click.away="open = false"
-                    class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col">
+            <!-- ================= ADD PROJECT OFFCANVAS ================= -->
+            <div x-show="addOpen"
+                 x-transition
+                 class="fixed inset-0 flex justify-end bg-black/40 z-50">
+
+                <div @click.away="addOpen = false"
+                     class="w-full max-w-md bg-white h-screen shadow-xl flex flex-col"
+                     x-data="addProjectForm()" x-init="init()">
+
+                    <!-- Loading overlay -->
+                    <div x-show="isLoading" x-transition
+                         class="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
+                        <div class="bg-white w-80 rounded-2xl shadow-xl p-8 text-center">
+                            <div class="flex justify-center mb-4">
+                                <svg class="animate-spin h-12 w-12 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold text-gray-800">Loading Sites...</h2>
+                            <p class="text-sm text-gray-500 mt-2">Fetching sites for selected region</p>
+                        </div>
+                    </div>
 
                     <!-- HEADER -->
                     <div class="flex justify-between items-center p-6 border-b">
-
                         <h2 class="text-lg font-semibold">Add Project</h2>
-
-                        <button @click="open = false"
-                                class="text-gray-500 hover:text-black text-xl">
-                            ✕
-                        </button>
-
+                        <button @click="addOpen = false" class="text-gray-500 hover:text-black text-xl">✕</button>
                     </div>
 
+                    <!-- BODY -->
                     <div class="flex-1 overflow-y-auto p-6">
-                        <!-- FORM -->
-                        <form class="space-y-4">
+                        <form class="space-y-4" @submit.prevent="submitProject()">
 
+                            <!-- Project Name -->
                             <div>
-                                <label class="text-sm font-medium">Project Name</label>
-                                <input type="text"
-                                    class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <label class="text-sm font-medium">Project Name <span class="text-red-500">*</span></label>
+                                <input type="text" x-model="form.name" required
+                                       class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                       placeholder="e.g. Road Construction Phase 1">
                             </div>
 
-                            <div x-data="regionSiteSelect()">
-                                <div x-show="isLoading"
-                                    x-transition
-                                    class="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
-
-                                    <div class="bg-white w-80 sm:w-96 rounded-2xl shadow-xl p-8 text-center">
-
-                                        <!-- Spinner -->
-                                        <div class="flex justify-center mb-4">
-                                            <svg class="animate-spin h-12 w-12 text-green-600"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24">
-
-                                                <circle class="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        stroke-width="4">
-                                                </circle>
-
-                                                <path class="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8v8H4z">
-                                                </path>
-
-                                            </svg>
-                                        </div>
-
-                                        <h2 class="text-lg font-semibold text-gray-800">
-                                            Fetching Region Data
-                                        </h2>
-
-                                        <p class="text-sm text-gray-500 mt-2">
-                                            Loading sites from server...
-                                        </p>
-
-                                        <div class="mt-6 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                            <div class="h-2 bg-green-500 animate-pulse w-full"></div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!-- Region -->
-                                <div class="mb-4">
-
-                                    <label class="text-sm font-medium">Region</label>
-
-                                    <select
-                                        x-model="selectedRegion"
-                                        @change="loadRegionSites()"
-                                        class="w-full border rounded-lg px-3 py-2 mt-1">
-
-                                        <option value="">Select Region</option>
-
-                                        <template x-for="region in regions" :key="region">
-                                            <option :value="region" x-text="region"></option>
-                                        </template>
-
-                                    </select>
-
-                                </div>
-
-                                <!-- Site -->
-                                <div>
-
-                                    <label class="text-sm font-medium">Site</label>
-
-                                    <select
-                                        x-model="selectedSite"
-                                        class="w-full border rounded-lg px-3 py-2 mt-1">
-
-                                        <option value="">Select Site</option>
-
-                                        <template x-for="site in sites" :key="site.id">
-
-                                            <option
-                                                :value="site.id"
-                                                x-text="site.name">
-                                            </option>
-
-                                        </template>
-
-                                    </select>
-
-                                </div>
-
+                            <!-- Client -->
+                            <div>
+                                <label class="text-sm font-medium">Client</label>
+                                <input type="text" x-model="form.client"
+                                       class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                       placeholder="e.g. Sarawak Works Dept">
                             </div>
-                            <!-- TICKETS FIELD (Multi Select) -->
-                            <div x-data="ticketSelect()" class="relative">
 
-                                <label class="text-sm font-medium">Tickets</label>
-
-                                <!-- SELECT BOX -->
-                                <button type="button"
-                                        @click="open = !open"
-                                        class="w-full border rounded-lg px-3 py-2 mt-1 text-left bg-white flex justify-between items-center">
-
-                                    <span class="text-gray-600">
-                                        Select Tickets
-                                    </span>
-
-                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
-
-                                </button>
-
-                                <!-- DROPDOWN -->
-                                <div x-show="open"
-                                    @click.away="open = false"
-                                    class="absolute z-50 w-full mt-1 bg-white border rounded-lg shadow max-h-48 overflow-auto">
-
-                                    <template x-for="ticket in tickets" :key="ticket.id">
-
-                                        <label class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer">
-
-                                            <input type="checkbox"
-                                                :value="ticket.id"
-                                                x-model.number="selected">
-
-                                            <span x-text="ticket.name"></span>
-
-                                        </label>
-
+                            <!-- Region -->
+                            <div>
+                                <label class="text-sm font-medium">Region <span class="text-red-500">*</span></label>
+                                <select x-model="form.region" @change="onRegionChange()" required
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option value="">— Select Region —</option>
+                                    <template x-for="r in regions" :key="r">
+                                        <option :value="r" x-text="r"></option>
                                     </template>
-
-                                </div>
-
-                                <!-- SELECTED TAGS -->
-                                <div class="flex flex-wrap gap-2 mt-2">
-
-                                    <template x-for="id in selected" :key="id">
-
-                                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs flex items-center gap-1">
-
-                                            <span x-text="getName(id)"></span>
-
-                                            <button type="button"
-                                                    @click="remove(id)"
-                                                    class="text-green-700 hover:text-red-500">
-                                                ✕
-                                            </button>
-
-                                        </span>
-
-                                    </template>
-
-                                </div>
-
+                                </select>
                             </div>
+
+                            <!-- Loading Site -->
+                            <div>
+                                <label class="text-sm font-medium">Loading Site <span class="text-red-500">*</span></label>
+                                <select x-model="form.loadingSite" required :disabled="!form.region"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-100 disabled:text-gray-400">
+                                    <option value="" x-text="form.region ? '— Select Loading Site —' : '— Select Region first —'"></option>
+                                    <template x-for="s in loadingSites" :key="s.id">
+                                        <option :value="s.name" x-text="s.name"></option>
+                                    </template>
+                                </select>
+                            </div>
+
+                            <!-- Dumping Site -->
+                            <div>
+                                <label class="text-sm font-medium">Dumping Site <span class="text-red-500">*</span></label>
+                                <select x-model="form.dumpingSite" required :disabled="!form.region"
+                                        class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-100 disabled:text-gray-400">
+                                    <option value="" x-text="form.region ? '— Select Dumping Site —' : '— Select Region first —'"></option>
+                                    <template x-for="s in dumpingSites" :key="s.id">
+                                        <option :value="s.name" x-text="s.name"></option>
+                                    </template>
+                                </select>
+                            </div>
+
+                            <!-- Rate -->
+                            <div>
+                                <label class="text-sm font-medium">Rate (RM per ton) <span class="text-red-500">*</span></label>
+                                <div class="relative mt-1">
+                                    <span class="absolute left-3 top-2.5 text-gray-500 text-sm">RM</span>
+                                    <input type="number" x-model="form.rate" step="0.01" min="0" required
+                                           class="w-full border rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                           placeholder="0.00">
+                                </div>
+                            </div>
+
+                            <!-- Description -->
                             <div>
                                 <label class="text-sm font-medium">Description</label>
-                                <textarea rows="3"
-                                        class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                                <textarea x-model="form.description" rows="3"
+                                          class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                          placeholder="Optional notes..."></textarea>
                             </div>
 
                             <!-- FOOTER BUTTONS -->
                             <div class="flex justify-end gap-2 pt-4 border-t">
-
-                                <button type="button"
-                                        @click="open = false"
+                                <button type="button" @click="addOpen = false"
                                         class="px-4 py-2 border rounded-lg hover:bg-gray-100">
                                     Cancel
                                 </button>
-
                                 <button type="submit"
                                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
                                     Save Project
                                 </button>
-
                             </div>
 
                         </form>
                     </div>
-
                 </div>
             </div>
-        </main>
 
+        </main>
     </div>
 </div>
 
 <script>
 lucide.createIcons();
-</script>
-<script>
-function ticketSelect() {
+
+// ── Shared site data (simulate DB) ──────────────────────────────────────────
+const ALL_SITES = [
+    { id: 1, region: 'Kuching', type: 'loading',  name: 'Kuching Quarry' },
+    { id: 2, region: 'Kuching', type: 'loading',  name: 'Batu Kawa Loading Bay' },
+    { id: 3, region: 'Kuching', type: 'dumping',  name: 'Samarahan Dump Site' },
+    { id: 4, region: 'Kuching', type: 'dumping',  name: 'Kuching Landfill' },
+    { id: 5, region: 'Miri',    type: 'loading',  name: 'Miri Quarry' },
+    { id: 6, region: 'Miri',    type: 'loading',  name: 'Bekenu Site' },
+    { id: 7, region: 'Miri',    type: 'dumping',  name: 'Miri Landfill' },
+    { id: 8, region: 'Lawas',   type: 'loading',  name: 'Lawas Quarry' },
+    { id: 9, region: 'Lawas',   type: 'dumping',  name: 'Lawas Dump Zone A' },
+    { id: 10, region: 'Bintulu', type: 'loading', name: 'Bintulu Industrial Area' },
+    { id: 11, region: 'Bintulu', type: 'dumping', name: 'Bintulu Dump Site A' },
+];
+
+const REGIONS = ['Kuching', 'Miri', 'Lawas', 'Bintulu'];
+
+// Shared project data
+const PROJECTS = [
+    { id: 1, name: 'Project Alpha', client: 'Sarawak Works Dept', region: 'Kuching', loadingSite: 'Kuching Quarry',         dumpingSite: 'Samarahan Dump Site', rate: 45.00, status: 'In Progress' },
+    { id: 2, name: 'Project Beta',  client: 'Bintulu Dev Auth',   region: 'Bintulu', loadingSite: 'Bintulu Industrial Area', dumpingSite: 'Bintulu Dump Site A', rate: 38.50, status: 'New' },
+    { id: 3, name: 'Project Gamma', client: 'Miri City Council',  region: 'Miri',    loadingSite: 'Miri Quarry',            dumpingSite: 'Miri Landfill',       rate: 42.00, status: 'Completed' },
+];
+
+// ── Project table ────────────────────────────────────────────────────────────
+function projectTable() {
     return {
-        open: false,
+        addOpen: false,
+        selectedRegion: '',
+        search: '',
+        regions: REGIONS,
+        projects: PROJECTS,
 
-        // dummy tickets (replace later with Laravel API)
-        tickets: [
-            { id: 1, name: 'TK-1001 Engine Issue' },
-            { id: 2, name: 'TK-1002 GPS Failure' },
-            { id: 3, name: 'TK-1003 Brake Check' },
-            { id: 4, name: 'TK-1004 Oil Leak' },
-        ],
-
-        selected: [],
-
-        getName(id) {
-            return this.tickets.find(t => t.id === id)?.name ?? '';
+        init() {
+            this.$nextTick(() => lucide.createIcons());
         },
 
-        remove(id) {
-            this.selected = this.selected.filter(i => i !== id);
+        get filteredProjects() {
+            return this.projects.filter(p => {
+                const matchRegion = !this.selectedRegion || p.region === this.selectedRegion;
+                const matchSearch = !this.search ||
+                    p.name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    (p.client || '').toLowerCase().includes(this.search.toLowerCase());
+                return matchRegion && matchSearch;
+            });
         }
     }
 }
-function regionSiteSelect() {
+
+// ── Add Project form ─────────────────────────────────────────────────────────
+function addProjectForm() {
     return {
-
         isLoading: false,
+        regions: REGIONS,
+        loadingSites: [],
+        dumpingSites: [],
 
-        selectedRegion: '',
-        selectedSite: '',
+        form: {
+            name: '',
+            client: '',
+            region: '',
+            loadingSite: '',
+            dumpingSite: '',
+            rate: '',
+            status: 'New',
+            description: '',
+        },
 
-        regions: [
-            'Kuching',
-            'Miri',
-            'Lawas',
-            'Bintulu'
-        ],
+        init() {},
 
-        sites: [],
+        onRegionChange() {
+            this.form.loadingSite = '';
+            this.form.dumpingSite = '';
+            this.loadingSites = [];
+            this.dumpingSites = [];
 
-        allSites: [
-            {
-                id: 1,
-                region: 'Kuching',
-                name: 'Kuching Quarry'
-            },
-            {
-                id: 2,
-                region: 'Kuching',
-                name: 'Batu Kawa Site'
-            },
-            {
-                id: 3,
-                region: 'Miri',
-                name: 'Miri Port'
-            },
-            {
-                id: 4,
-                region: 'Lawas',
-                name: 'Lawas Main Site'
-            },
-            {
-                id: 5,
-                region: 'Bintulu',
-                name: 'Bintulu Terminal'
-            }
-        ],
-
-        loadRegionSites() {
+            if (!this.form.region) return;
 
             this.isLoading = true;
 
-            this.selectedSite = '';
-            this.sites = [];
-
-            // Simulate API request
+            // Simulate API delay
             setTimeout(() => {
-
-                this.sites = this.allSites.filter(
-                    site => site.region === this.selectedRegion
-                );
-
+                const regionSites = ALL_SITES.filter(s => s.region === this.form.region);
+                this.loadingSites = regionSites.filter(s => s.type === 'loading');
+                this.dumpingSites = regionSites.filter(s => s.type === 'dumping');
                 this.isLoading = false;
-
-            }, 1500);
-        }
-    }
-}
-function ticketTable() {
-    return {
-        selectedRegion: '',
-
-        init() {
-            this.$nextTick(() => {
-                lucide.createIcons();
-            });
+            }, 800);
         },
-        projects: [
-            { name: 'Project Alpha', region: 'Kuching', site: 'Kuching Site A', tickets: 3, status: 'New' },
-            { name: 'Project Beta', region: 'Bintulu', site: 'Bintulu Site A', tickets: 5, status: 'In Progress' },
-            { name: 'Project Gamma', region: 'Lawas', site: 'Lawas Depot', tickets: 8, status: 'Completed' },
-        ],
 
-        get filteredProjects() {
-            if (!this.selectedRegion) return this.projects
-            return this.projects.filter(p => p.region === this.selectedRegion)
+        submitProject() {
+            if (!this.form.name || !this.form.region || !this.form.loadingSite || !this.form.dumpingSite || !this.form.rate) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Add to demo data
+            const newProject = {
+                id: Date.now(),
+                name: this.form.name,
+                client: this.form.client,
+                region: this.form.region,
+                loadingSite: this.form.loadingSite,
+                dumpingSite: this.form.dumpingSite,
+                rate: parseFloat(this.form.rate),
+                status: this.form.status,
+            };
+
+            // Push to shared projects (access parent scope)
+            this.$root.closest('[x-data]').__x.$data.projects.push(newProject);
+            PROJECTS.push(newProject);
+
+            // Reset form
+            this.form = { name: '', client: '', region: '', loadingSite: '', dumpingSite: '', rate: '', status: 'New', description: '' };
+            this.loadingSites = [];
+            this.dumpingSites = [];
+
+            this.$root.closest('[x-data]').__x.$data.addOpen = false;
+
+            this.$nextTick(() => lucide.createIcons());
         }
     }
 }
-
 </script>
 </body>
 </html>
